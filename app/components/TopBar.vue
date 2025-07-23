@@ -18,6 +18,7 @@
             style="border-radius: 20%"
             flat
             icon
+            to="/"
           >
             <v-icon
               class="icon-style pa-6"
