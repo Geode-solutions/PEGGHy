@@ -1,6 +1,4 @@
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <Wrapper />
-  </div>
+  <NuxtRouteAnnouncer />
+  <Wrapper />
 </template>
