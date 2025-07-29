@@ -61,5 +61,23 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "@vueuse/nuxt",
   ],
+
+  imports: {
+    dirs: [
+      "/app/stores",
+      "@geode/opengeodeweb-front/stores",
+      "@geode/vease/app/stores",
+    ],
+  },
   css: ["/assets/css/main.css"],
+  extends: ["@geode/vease"],
+
+  vite: {
+    optimizeDeps: {
+      include: ["@geode/vease", "@kitware/vtk.js", "xmlbuilder2"],
+    },
+    watch: {
+      ignored: ["**"],
+    },
+  },
 });
