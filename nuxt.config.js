@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
+  extends: ["@geode/opengeodeweb-front"],
   devtools: { enabled: true },
   future: {
     compatibilityVersion: 4,
@@ -61,5 +62,29 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "@vueuse/nuxt",
   ],
+
+  imports: {
+    dirs: [
+      "/app/stores",
+      "@geode/opengeodeweb-front/stores",
+      "@geode/vease/app/stores",
+    ],
+  },
+
   css: ["/assets/css/main.css"],
+
+  vite: {
+    optimizeDeps: {
+      include: ["@kitware/vtk.js", "xmlbuilder2", "spark-md5"],
+    },
+    resolve: {
+      alias: {
+        "@geode/vease": "@geode/vease/app",
+        "@ogw_f": "@geode/opengeodeweb-front",
+      },
+    },
+    watch: {
+      ignored: ["**"],
+    },
+  },
 });
