@@ -29,11 +29,8 @@
   },
   "dependencies": {
     "@geode/opengeodeweb-back": "5.8.7",
-    "@geode/opengeodeweb-front": "9.11.0-rc.9",
+    "@geode/opengeodeweb-front": "9.11.3-rc.2",
     "@geode/opengeodeweb-viewer": "1.10.1",
-    "@geode/vease": "1.12.0-rc.7",
-    "@geode/vease-back": "1.4.15",
-    "@geode/vease-viewer": "2.3.13",
     "@nuxt/devtools": "2.6.2",
     "@pinia/nuxt": "0.11.2",
     "@vueuse/nuxt": "13.5.0",
@@ -44,7 +41,7 @@
     "vtk.js": "33.1.0",
     "vue": "3.5.17",
     "vue-router": "4.5.1",
-    "vuetify": "^3.9.2",
+    "vuetify": "3.8.12",
     "vuetify-nuxt-module": "0.18.7"
   }
 }

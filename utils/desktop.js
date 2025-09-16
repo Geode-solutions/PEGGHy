@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 
 function create_new_window() {
   const win = new BrowserWindow({
-    title: "Vease - New project",
+    title: "pegghy - New project",
     icon: process.platform === "win32" ? "public/logo.ico" : "public/logo.png",
     center: true,
     webPreferences: {
@@ -66,7 +66,7 @@ function create_new_window() {
   win.webContents.session.clearStorageData();
   win.webContents.session.clearData(["cache"]);
   win.webContents.session.clearCache(function () {
-    console.log("Vease cache cleared!");
+    console.log("pegghy cache cleared!");
   });
 
   win.webContents.on(

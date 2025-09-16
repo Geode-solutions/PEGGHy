@@ -28,3 +28,4 @@ logs
 /microservices/viewer/dist
 /microservices/back/venv
 /microservices/viewer/venv
+/server

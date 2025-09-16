@@ -1,37 +1,41 @@
 // Node.js imports
 import fs from "fs";
 import path from "path";
-import child_process from "child_process";
-import { spawn } from "child_process";
+import child_process, { spawn } from "child_process";
 import os from "os";
 
 // Third party imports
-import pkg from "electron";
-const { app, dialog } = pkg;
 import { getPort } from "get-port-please";
 import pidtree from "pidtree";
 import isElectron from "is-electron";
 import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
+// Optional Electron import
+let app = null;
+let dialog = null;
+try {
+  const electron = await import("electron");
+  app = electron.app;
+  dialog = electron.dialog;
+} catch (err) {
+  console.log("Electron not available, running in web mode.");
+}
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Global variables
 var processes = [];
 
 function venv_script_path(root_path, microservice_path) {
   const venv_path = path.join(root_path, microservice_path, "venv");
-  var script_path;
-  if (process.platform === "win32") {
-    script_path = path.join(venv_path, "Scripts");
-  } else {
-    script_path = path.join(venv_path, "bin");
-  }
-  return script_path;
+  return process.platform === "win32"
+    ? path.join(venv_path, "Scripts")
+    : path.join(venv_path, "bin");
 }
 
 function executable_path(microservice_path) {
-  if (isElectron()) {
+  if (isElectron() && app) {
     if (app.isPackaged) {
       return process.resourcesPath;
     } else {
@@ -43,18 +47,15 @@ function executable_path(microservice_path) {
 }
 
 function executable_name(name) {
-  if (process.platform === "win32") {
-    return name + ".exe";
-  }
-  return name;
+  return process.platform === "win32" ? name + ".exe" : name;
 }
 
-function create_path(path) {
-  if (!fs.existsSync(path)) {
-    fs.mkdirSync(path, { recursive: true });
-    console.log(`${path} directory created successfully!`);
+function create_path(pathToCreate) {
+  if (!fs.existsSync(pathToCreate)) {
+    fs.mkdirSync(pathToCreate, { recursive: true });
+    console.log(`${pathToCreate} directory created successfully!`);
   }
-  return path;
+  return pathToCreate;
 }
 
 async function get_available_port(port) {
@@ -96,24 +97,28 @@ async function run_script(
     setTimeout(() => {
       reject("Timed out after " + timeout_seconds + " seconds");
     }, timeout_seconds * 1000);
+
     const child = child_process.spawn(command, args, {
       encoding: "utf8",
       shell: true,
     });
     register_children_processes(child);
 
-    // You can also use a variable to save the output for when the script closes later
     child.stderr.setEncoding("utf8");
     child.on("error", (error) => {
-      dialog.showMessageBox({
-        title: "Title",
-        type: "warning",
-        message: "Error occured.\r\n" + error,
-      });
+      if (dialog) {
+        dialog.showMessageBox({
+          title: "Error",
+          type: "warning",
+          message: "Error occurred.\r\n" + error,
+        });
+      } else {
+        console.error("Error occurred:\n" + error);
+      }
     });
+
     child.stdout.setEncoding("utf8");
     child.stdout.on("data", (data) => {
-      //Here is the output
       data = data.toString();
       if (data.includes(expected_response)) {
         register_children_processes(child);
@@ -123,16 +128,17 @@ async function run_script(
     });
 
     child.stderr.on("data", (data) => {
-      console.log(data);
+      console.log(data.toString());
     });
 
     child.on("close", (_code) => {
-      //Here you can get the exit code of the script
       console.log("Child Process exited with code " + _code);
     });
+
     child.on("kill", () => {
       console.log("Child Process killed");
     });
+
     child.name = command.replace(/^.*[\\/]/, "");
     return child;
   });
@@ -142,13 +148,14 @@ async function run_back(port, project_folder_path) {
   return new Promise(async (resolve, reject) => {
     const back_command = path.join(
       executable_path(path.join("microservices", "back")),
-      executable_name("vease-back")
+      executable_name("pegghy-back")
     );
     const back_port = await get_available_port(port);
     const back_args = [
       "--port " + back_port,
       "--data_folder_path " + project_folder_path,
-      "--upload_folder_path " + path.join(project_folder_path, "uploads"),
+      "--upload_folder_path " +
+        path.join(project_folder_path, "server", "PEGGHy-Data"),
       "--allowed_origin http://localhost:*",
       "--timeout " + 0,
     ];
@@ -161,7 +168,7 @@ async function run_viewer(port, data_folder_path) {
   return new Promise(async (resolve, reject) => {
     const viewer_command = path.join(
       executable_path(path.join("microservices", "viewer")),
-      executable_name("vease-viewer")
+      executable_name("pegghy-viewer")
     );
     const viewer_port = await get_available_port(port);
     const viewer_args = [
@@ -188,7 +195,7 @@ function delete_folder_recursive(data_folder_path) {
 }
 
 async function run_browser(script_name) {
-  const data_folder_path = create_path(path.join(os.tmpdir(), "vease"));
+  const data_folder_path = create_path(path.join(os.tmpdir(), "pegghy"));
 
   async function run_microservices() {
     const back_promise = run_back(5000, data_folder_path);
@@ -200,23 +207,25 @@ async function run_browser(script_name) {
     process.env.GEODE_PORT = back_port;
     process.env.VIEWER_PORT = viewer_port;
   }
+
   await run_microservices();
   process.env.BROWSER = true;
+
   process.on("SIGINT", async () => {
     await kill_processes();
     console.log("Quitting PEGGHy...");
     process.exit(0);
   });
 
-  console.log("process.argv", process.argv);
-
   const nuxt_port = await get_available_port();
   console.log("nuxt_port", nuxt_port);
+
   return new Promise((resolve, reject) => {
     process.env.NUXT_PORT = nuxt_port;
     const nuxt_process = spawn("npm", ["run", script_name], {
       shell: true,
     });
+
     nuxt_process.stdout.on("data", function (data) {
       const output = data.toString();
       console.log("NUXT OUTPUT", output);

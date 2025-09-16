@@ -3,7 +3,7 @@
     :key="$route.path"
     flat
     color="transparent"
-    height="70"
+    height="75"
     :elevation="0"
     style="z-index: 100"
   >

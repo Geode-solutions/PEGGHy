@@ -1,4 +1,9 @@
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      API_URL: "api.pegghy.geode-solutions.com/",
+    },
+  },
   compatibilityDate: "2025-07-15",
   extends: ["@geode/opengeodeweb-front"],
   devtools: { enabled: true },
@@ -64,11 +69,7 @@ export default defineNuxtConfig({
   ],
 
   imports: {
-    dirs: [
-      "/app/stores",
-      "@geode/opengeodeweb-front/stores",
-      "@geode/vease/app/stores",
-    ],
+    dirs: ["/app/stores", "@geode/opengeodeweb-front/stores"],
   },
 
   css: ["/assets/css/main.css"],
@@ -79,7 +80,6 @@ export default defineNuxtConfig({
     },
     resolve: {
       alias: {
-        "@geode/vease": "@geode/vease/app",
         "@ogw_f": "@geode/opengeodeweb-front",
       },
     },
