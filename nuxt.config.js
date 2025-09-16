@@ -2,6 +2,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       API_URL: "api.pegghy.geode-solutions.com/",
+      VERSION: package_json.version,
+      PROJECT: process.env.PROJECT,
+      RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
     },
   },
   compatibilityDate: "2025-07-15",
