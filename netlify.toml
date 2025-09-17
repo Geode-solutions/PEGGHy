@@ -1,0 +1,21 @@
+[[redirects]]
+  from = "https://pegghy.geode-solutions.netlify.com/*"
+  to = "https://pegghy.geode-solutions.com/:splat"
+  status = 301
+  force = true
+
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+[context.production.environment]
+  PROJECT = "/pegghy"
+  SITE_BRANCH = ""
+  RECAPTCHA_SITE_KEY = "6Lce72wgAAAAAOXrHyDxRQBhk6NDTD80MrXOlgbC"
+  SITE_URL = "https://pegghy.geode-solutions.com"
+[context.branch-deploy.environment]
+  PROJECT = "/pegghy"
+  SITE_BRANCH = "/test"
+  RECAPTCHA_SITE_KEY = "6Lce72wgAAAAAOXrHyDxRQBhk6NDTD80MrXOlgbC"
+  SITE_URL = "https://next.pegghy.geode-solutions.com"
+[build]
+  command = "npm i && npm run generate"
