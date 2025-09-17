@@ -1,5 +1,6 @@
 <template>
   <Launcher v-if="infra_store.status != Status.CREATED" />
+  <Partners v-if="infra_store.status != Status.CREATED" />
   <v-card
     v-else
     ref="cardContainer"
