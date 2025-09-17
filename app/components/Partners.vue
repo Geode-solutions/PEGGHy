@@ -95,10 +95,10 @@
           <v-row justify="center">
             <v-col
               v-for="(item, i) in partners"
-              :key="'pt' + i"
+              :key="'pa' + i"
               cols="4"
               sm="3"
-              md="2"
+              md="4"
               class="d-flex justify-center"
             >
               <v-img :src="item.logo" max-height="80" max-width="180" contain />
@@ -129,7 +129,7 @@ import loritz from "@/assets/img/loritz.png";
 import andra from "@/assets/img/andra.png";
 import humens from "@/assets/img/humens.png";
 
-const designers = [{ logo: geode }, { logo: otelo }, { logo: udl }];
+const designers = [{ logo: otelo }, { logo: udl }];
 const cofounders = [
   { logo: grandest },
   { logo: geolnancy },
@@ -144,6 +144,7 @@ const patronage = [
   { logo: anteagroup },
 ];
 const partners = [
+  { logo: geode },
   { logo: enerex },
   { logo: sercel },
   { logo: loritz },

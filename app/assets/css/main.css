@@ -22,3 +22,9 @@ h2 {
 .icon-style:hover {
   background-color: #ffffff4d;
 }
+html,
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}

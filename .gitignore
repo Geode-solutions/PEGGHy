@@ -22,3 +22,10 @@ logs
 .env
 .env.*
 !.env.example
+
+#Other
+/microservices/back/dist
+/microservices/viewer/dist
+/microservices/back/venv
+/microservices/viewer/venv
+/server

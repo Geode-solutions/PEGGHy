@@ -1,5 +1,12 @@
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      API_URL: "api.pegghy.geode-solutions.com/",
+      RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
+    },
+  },
   compatibilityDate: "2025-07-15",
+  extends: ["@geode/opengeodeweb-front"],
   devtools: { enabled: true },
   future: {
     compatibilityVersion: 4,
@@ -61,5 +68,24 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "@vueuse/nuxt",
   ],
+
+  imports: {
+    dirs: ["/app/stores", "@geode/opengeodeweb-front/stores"],
+  },
+
   css: ["/assets/css/main.css"],
+
+  vite: {
+    optimizeDeps: {
+      include: ["@kitware/vtk.js", "xmlbuilder2", "spark-md5"],
+    },
+    resolve: {
+      alias: {
+        "@ogw_f": "@geode/opengeodeweb-front",
+      },
+    },
+    watch: {
+      ignored: ["**"],
+    },
+  },
 });
