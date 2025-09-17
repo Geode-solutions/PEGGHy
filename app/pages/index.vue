@@ -1,9 +1,5 @@
 <template>
-  <v-container class="d-flex justify-center">
-    <v-col cols="6">
-      <Launcher v-if="infra_store.status != Status.CREATED" />
-    </v-col>
-  </v-container>
+  <Launcher v-if="infra_store.status != Status.CREATED" />
   <Partners v-if="infra_store.status != Status.CREATED" />
   <v-card
     v-else
