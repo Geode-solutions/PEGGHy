@@ -157,77 +157,51 @@ const dataList = [
   },
 ];
 
-async function saveAllViewables() {
-  const savePromises = dataList.map((file) => {
-    return api_fetch({
+function loaddataList() {
+  for (let index = 0; index < dataList.length; index++) {
+    const data = dataList[index];
+    api_fetch({
       schema: back_schemas.opengeodeweb_back.save_viewable_file,
       params: {
-        input_geode_object: file.geode_object,
-        filename: file.file_name,
+        input_geode_object: data.geode_object,
+        filename: data.file_name,
       },
+    }).then((response) => {
+      const id = response.data.value.id;
+      const schema = viewer_schemas.opengeodeweb_viewer.generic.register;
+      viewer_call({
+        schema: schema,
+        params: {
+          id,
+          file_name: response.data.value.viewable_file_name,
+          viewer_object: data.object_type,
+        },
+      }).then(() => {
+        dataBaseStore.addItem(response.data.value.id, {
+          object_type: data.object_type,
+          geode_object: data.geode_object,
+          native_filename: data.file_name,
+          viewable_filename: data.file_name,
+          displayed_name: response.data.value.name,
+          vtk_js: {
+            binary_light_viewable: response.data.value.binary_light_viewable,
+          },
+        });
+      });
     });
-  });
-  const responses = await Promise.all(savePromises);
-  return responses;
-}
-
-async function registerAllObjects(responses) {
-  console.log("viewer_store.status", viewer_store.status);
-  console.log("responses pour registration", responses);
-  const registerPromises = responses.map((response, index) => {
-    console.log("response.data.value.id", response.data.value.id);
-    console.log("index", index);
-    const id = response.data.value.id;
-    const schema = viewer_schemas.opengeodeweb_viewer.generic.register;
-    return viewer_call({
-      schema: schema,
-      params: {
-        id,
-        file_name: response.data.value.viewable_file_name,
-        viewer_object: dataList[index].object_type,
-      },
-    });
-  });
-  await Promise.all(registerPromises);
-}
-
-async function addAllItems(responses) {
-  responses.forEach((response, index) => {
-    console.log("response", response);
-    console.log("index", index);
-
-    const file = dataList[index];
-    dataBaseStore.addItem(response.data.value.id, {
-      object_type: file.object_type,
-      geode_object: file.geode_object,
-      native_filename: file.file_name,
-      viewable_filename: file.file_name,
-      displayed_name: response.data.value.name,
-      vtk_js: {
-        binary_light_viewable: response.data.value.binary_light_viewable,
-      },
-    });
-  });
-  console.log("dataBaseStore.db", dataBaseStore.db);
-}
-
-async function loaddataList() {
-  const responses = await saveAllViewables();
-  console.log("responses", responses);
-  await registerAllObjects(responses);
-  await addAllItems(responses);
+  }
 }
 
 watch(
   () => [viewer_store.status, geode_store.status],
-  async ([viewerStatus, geodeStatus]) => {
+  ([viewerStatus, geodeStatus]) => {
     console.log("Status viewer changed:", viewerStatus);
     console.log("Status geode changed:", geodeStatus);
 
     console.log("Status", Status);
     if (viewerStatus === Status.CONNECTED && geodeStatus === Status.CONNECTED) {
       console.log("loaddataList");
-      await loaddataList();
+      loaddataList();
     }
   },
   { immediate: true }
