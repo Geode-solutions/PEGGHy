@@ -173,8 +173,6 @@ function loaddataList() {
         schema: schema,
         params: {
           id,
-          file_name: response.data.value.viewable_file_name,
-          viewer_object: data.object_type,
         },
       }).then(() => {
         dataBaseStore.addItem(response.data.value.id, {
