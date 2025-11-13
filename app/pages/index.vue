@@ -25,7 +25,6 @@
 
 <script setup>
   import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json"
-  import back_schemas from "@geode/opengeodeweb-back/opengeodeweb_back_schemas.json"
   import { importWorkflow } from "@geode/opengeodeweb-front/utils/file_import_workflow"
   import Status from "@ogw_f/utils/status.js"
 
@@ -52,7 +51,7 @@
   const geode_store = useGeodeStore()
   const menuStore = useMenuStore()
   const dataStyleStore = useDataStyleStore()
-  const dataBaseStore = useDataBaseStore()
+  const hybridViewerStore = useHybridViewerStore()
 
   const menuX = ref(0)
   const menuY = ref(0)
@@ -156,39 +155,6 @@
     },
   ]
 
-  function loaddataList() {
-    for (let index = 0; index < dataList.length; index++) {
-      const data = dataList[index]
-      api_fetch({
-        schema: back_schemas.opengeodeweb_back.save_viewable_file,
-        params: {
-          input_geode_object: data.geode_object,
-          filename: data.filename,
-        },
-      }).then((response) => {
-        const id = response.data.value.id
-        const schema = viewer_schemas.opengeodeweb_viewer.generic.register
-        viewer_call({
-          schema: schema,
-          params: {
-            id,
-          },
-        }).then(() => {
-          dataBaseStore.addItem(response.data.value.id, {
-            object_type: data.object_type,
-            geode_object: data.geode_object,
-            native_filename: data.filename,
-            viewable_filename: data.filename,
-            displayed_name: response.data.value.name,
-            vtk_js: {
-              binary_light_viewable: response.data.value.binary_light_viewable,
-            },
-          })
-        })
-      })
-    }
-  }
-
   watch(
     () => [viewer_store.status, geode_store.status],
     ([viewerStatus, geodeStatus]) => {
@@ -201,7 +167,8 @@
         geodeStatus === Status.CONNECTED
       ) {
         console.log("loaddataList")
-        importWorkflow(dataList)
+        await importWorkflow(dataList)
+        hybridViewerStore.remoteRender()
       }
     },
     { immediate: true },
