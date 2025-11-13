@@ -29,3 +29,4 @@ logs
 /microservices/back/venv
 /microservices/viewer/venv
 /server
+VTK.txt

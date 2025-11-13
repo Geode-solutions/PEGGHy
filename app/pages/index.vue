@@ -26,6 +26,7 @@
 <script setup>
 import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json";
 import back_schemas from "@geode/opengeodeweb-back/opengeodeweb_back_schemas.json";
+import { importWorkflow } from "@geode/opengeodeweb-front/utils/file_import_workflow";
 import Status from "@ogw_f/utils/status.js";
 
 const infra_store = useInfraStore();
@@ -44,116 +45,96 @@ const cardContainer = useTemplateRef("cardContainer");
 const { display_menu } = storeToRefs(menuStore);
 
 const dataList = [
-  { file_name: "barrel.pl", geode_object: "EdgedCurve3D", object_type: "mesh" },
+  { filename: "barrel.pl", geode_object: "EdgedCurve3D" },
   {
-    file_name: "block_central.pl",
+    filename: "block_central.pl",
+    geode_object: "EdgedCurve3D",
+  },
+  {
+    filename: "block_east.pl",
+    geode_object: "EdgedCurve3D",
+  },
+  {
+    filename: "block_west.pl",
+    geode_object: "EdgedCurve3D",
+  },
+  {
+    filename: "metal_d5_east_shallow.pl",
     geode_object: "EdgedCurve3D",
     object_type: "mesh",
   },
   {
-    file_name: "block_east.pl",
+    filename: "metal_d5_west_shallow.pl",
     geode_object: "EdgedCurve3D",
-    object_type: "mesh",
   },
   {
-    file_name: "block_west.pl",
+    filename: "metal_d10_east_shallow.pl",
     geode_object: "EdgedCurve3D",
-    object_type: "mesh",
   },
   {
-    file_name: "metal_d5_east_shallow.pl",
+    filename: "metal_d10_west_deep.pl",
     geode_object: "EdgedCurve3D",
-    object_type: "mesh",
   },
   {
-    file_name: "metal_d5_west_shallow.pl",
+    filename: "metal_d10_west_shallow.pl",
     geode_object: "EdgedCurve3D",
-    object_type: "mesh",
   },
   {
-    file_name: "metal_d10_east_shallow.pl",
+    filename: "PVC_d10_east_shallow.pl",
     geode_object: "EdgedCurve3D",
-    object_type: "mesh",
   },
   {
-    file_name: "metal_d10_west_deep.pl",
+    filename: "PVC_d10_west_shallow.pl",
     geode_object: "EdgedCurve3D",
-    object_type: "mesh",
   },
   {
-    file_name: "metal_d10_west_shallow.pl",
+    filename: "PVCwater_d10_shallow.pl",
     geode_object: "EdgedCurve3D",
-    object_type: "mesh",
   },
   {
-    file_name: "PVC_d10_east_shallow.pl",
-    geode_object: "EdgedCurve3D",
-    object_type: "mesh",
+    filename: "Base_cut.ts",
+    geode_object: "TriangulatedSurface3D",
   },
   {
-    file_name: "PVC_d10_west_shallow.pl",
-    geode_object: "EdgedCurve3D",
-    object_type: "mesh",
+    filename: "Main_fault_plane.ts",
+    geode_object: "TriangulatedSurface3D",
   },
   {
-    file_name: "PVCwater_d10_shallow.pl",
-    geode_object: "EdgedCurve3D",
-    object_type: "mesh",
+    filename: "Reservoir_limit_plane.ts",
+    geode_object: "TriangulatedSurface3D",
   },
   {
-    file_name: "Base_cut.ts",
+    filename: "Top_clay.ts",
+    geode_object: "TriangulatedSurface3D",
+  },
+  {
+    filename: "Top_eastern_sand.ts",
     geode_object: "TriangulatedSurface3D",
     object_type: "mesh",
   },
   {
-    file_name: "Main_fault_plane.ts",
+    filename: "Top_folded_limestone.ts",
     geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
   },
   {
-    file_name: "Reservoir_limit_plane.ts",
+    filename: "Topo_from_photogram.ts",
     geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
   },
   {
-    file_name: "Top_clay.ts",
+    filename: "Top_western_sand.ts",
     geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
   },
   {
-    file_name: "Top_eastern_sand.ts",
+    filename: "Top_western_trapp.ts",
     geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
   },
   {
-    file_name: "Top_folded_limestone.ts",
+    filename: "Top_eastern_trapp.ts",
     geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
   },
   {
-    file_name: "Topo_from_photogram.ts",
+    filename: "Vertical_contact_plane.ts",
     geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
-  },
-  {
-    file_name: "Top_western_sand.ts",
-    geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
-  },
-  {
-    file_name: "Top_western_trapp.ts",
-    geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
-  },
-  {
-    file_name: "Top_eastern_trapp.ts",
-    geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
-  },
-  {
-    file_name: "Vertical_contact_plane.ts",
-    geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
   },
 ];
 
@@ -164,7 +145,7 @@ function loaddataList() {
       schema: back_schemas.opengeodeweb_back.save_viewable_file,
       params: {
         input_geode_object: data.geode_object,
-        filename: data.file_name,
+        filename: data.filename,
       },
     }).then((response) => {
       const id = response.data.value.id;
@@ -178,8 +159,8 @@ function loaddataList() {
         dataBaseStore.addItem(response.data.value.id, {
           object_type: data.object_type,
           geode_object: data.geode_object,
-          native_filename: data.file_name,
-          viewable_filename: data.file_name,
+          native_filename: data.filename,
+          viewable_filename: data.filename,
           displayed_name: response.data.value.name,
           vtk_js: {
             binary_light_viewable: response.data.value.binary_light_viewable,
@@ -199,7 +180,7 @@ watch(
     console.log("Status", Status);
     if (viewerStatus === Status.CONNECTED && geodeStatus === Status.CONNECTED) {
       console.log("loaddataList");
-      loaddataList();
+      importWorkflow(dataList);
     }
   },
   { immediate: true }
