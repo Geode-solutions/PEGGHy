@@ -23,5 +23,5 @@
 </template>
 
 <script setup>
-import logoGeode from "@/assets/img/geode-no-text.png";
+  import logoGeode from "@/assets/img/geode-no-text.png"
 </script>

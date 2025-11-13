@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import { onUnmounted } from "vue";
-onUnmounted(() => {
-  console.log("Partners page unmounted");
-});
+  import { onUnmounted } from "vue"
+  onUnmounted(() => {
+    console.log("Partners page unmounted")
+  })
 </script>

@@ -4,13 +4,13 @@
 </template>
 
 <script setup>
-import Status from "@ogw_f/utils/status.js";
+  import Status from "@ogw_f/utils/status.js"
 
-const infra_store = useInfraStore();
+  const infra_store = useInfraStore()
 </script>
 
 <style>
-html {
-  overflow-y: auto;
-}
+  html {
+    overflow-y: auto;
+  }
 </style>

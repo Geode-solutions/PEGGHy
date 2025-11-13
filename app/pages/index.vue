@@ -24,218 +24,221 @@
 </template>
 
 <script setup>
-import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json";
-import back_schemas from "@geode/opengeodeweb-back/opengeodeweb_back_schemas.json";
-import { importWorkflow } from "@geode/opengeodeweb-front/utils/file_import_workflow";
-import Status from "@ogw_f/utils/status.js";
+  import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json"
+  import back_schemas from "@geode/opengeodeweb-back/opengeodeweb_back_schemas.json"
+  import { importWorkflow } from "@geode/opengeodeweb-front/utils/file_import_workflow"
+  import Status from "@ogw_f/utils/status.js"
 
-const infra_store = useInfraStore();
-const viewer_store = useViewerStore();
-const geode_store = useGeodeStore();
-const menuStore = useMenuStore();
-const dataStyleStore = useDataStyleStore();
-const dataBaseStore = useDataBaseStore();
+  const infra_store = useInfraStore()
+  const viewer_store = useViewerStore()
+  const geode_store = useGeodeStore()
+  const menuStore = useMenuStore()
+  const dataStyleStore = useDataStyleStore()
+  const dataBaseStore = useDataBaseStore()
 
-const menuX = ref(0);
-const menuY = ref(0);
-const containerWidth = ref(0);
-const containerHeight = ref(0);
-const id = ref("");
-const cardContainer = useTemplateRef("cardContainer");
-const { display_menu } = storeToRefs(menuStore);
+  const menuX = ref(0)
+  const menuY = ref(0)
+  const containerWidth = ref(0)
+  const containerHeight = ref(0)
+  const id = ref("")
+  const cardContainer = useTemplateRef("cardContainer")
+  const { display_menu } = storeToRefs(menuStore)
 
-const dataList = [
-  { filename: "barrel.pl", geode_object: "EdgedCurve3D" },
-  {
-    filename: "block_central.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "block_east.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "block_west.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "metal_d5_east_shallow.pl",
-    geode_object: "EdgedCurve3D",
-    object_type: "mesh",
-  },
-  {
-    filename: "metal_d5_west_shallow.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "metal_d10_east_shallow.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "metal_d10_west_deep.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "metal_d10_west_shallow.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "PVC_d10_east_shallow.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "PVC_d10_west_shallow.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "PVCwater_d10_shallow.pl",
-    geode_object: "EdgedCurve3D",
-  },
-  {
-    filename: "Base_cut.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Main_fault_plane.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Reservoir_limit_plane.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Top_clay.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Top_eastern_sand.ts",
-    geode_object: "TriangulatedSurface3D",
-    object_type: "mesh",
-  },
-  {
-    filename: "Top_folded_limestone.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Topo_from_photogram.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Top_western_sand.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Top_western_trapp.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Top_eastern_trapp.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-  {
-    filename: "Vertical_contact_plane.ts",
-    geode_object: "TriangulatedSurface3D",
-  },
-];
-
-function loaddataList() {
-  for (let index = 0; index < dataList.length; index++) {
-    const data = dataList[index];
-    api_fetch({
-      schema: back_schemas.opengeodeweb_back.save_viewable_file,
-      params: {
-        input_geode_object: data.geode_object,
-        filename: data.filename,
-      },
-    }).then((response) => {
-      const id = response.data.value.id;
-      const schema = viewer_schemas.opengeodeweb_viewer.generic.register;
-      viewer_call({
-        schema: schema,
-        params: {
-          id,
-        },
-      }).then(() => {
-        dataBaseStore.addItem(response.data.value.id, {
-          object_type: data.object_type,
-          geode_object: data.geode_object,
-          native_filename: data.filename,
-          viewable_filename: data.filename,
-          displayed_name: response.data.value.name,
-          vtk_js: {
-            binary_light_viewable: response.data.value.binary_light_viewable,
-          },
-        });
-      });
-    });
-  }
-}
-
-watch(
-  () => [viewer_store.status, geode_store.status],
-  ([viewerStatus, geodeStatus]) => {
-    console.log("Status viewer changed:", viewerStatus);
-    console.log("Status geode changed:", geodeStatus);
-
-    console.log("Status", Status);
-    if (viewerStatus === Status.CONNECTED && geodeStatus === Status.CONNECTED) {
-      console.log("loaddataList");
-      importWorkflow(dataList);
-    }
-  },
-  { immediate: true }
-);
-
-function resize() {
-  if (cardContainer.value) {
-    const { width, height } = useElementSize(cardContainer.value);
-    containerWidth.value = width.value;
-    containerHeight.value = height.value;
-  }
-}
-watch(
-  () => viewer_store.status,
-  (value) => {
-    if (value === Status.CONNECTED) {
-      resize();
-    }
-  }
-);
-
-onMounted(async () => {
-  if (viewer_store.status === Status.CONNECTED) {
-    resize();
-  }
-});
-
-async function get_viewer_id(x, y) {
-  const ids = dataStyleStore.selectedObjects;
-  await viewer_call(
+  const dataList = [
+    { filename: "barrel.pl", geode_object: "EdgedCurve3D" },
     {
-      schema: viewer_schemas.opengeodeweb_viewer.viewer.picked_ids,
-      params: { x, y, ids },
+      filename: "block_central.pl",
+      geode_object: "EdgedCurve3D",
     },
     {
-      response_function: (response) => {
-        const array_ids = response.array_ids;
-        id.value = array_ids[0];
-      },
+      filename: "block_east.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "block_west.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "metal_d5_east_shallow.pl",
+      geode_object: "EdgedCurve3D",
+      object_type: "mesh",
+    },
+    {
+      filename: "metal_d5_west_shallow.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "metal_d10_east_shallow.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "metal_d10_west_deep.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "metal_d10_west_shallow.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "PVC_d10_east_shallow.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "PVC_d10_west_shallow.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "PVCwater_d10_shallow.pl",
+      geode_object: "EdgedCurve3D",
+    },
+    {
+      filename: "Base_cut.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Main_fault_plane.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Reservoir_limit_plane.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Top_clay.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Top_eastern_sand.ts",
+      geode_object: "TriangulatedSurface3D",
+      object_type: "mesh",
+    },
+    {
+      filename: "Top_folded_limestone.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Topo_from_photogram.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Top_western_sand.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Top_western_trapp.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Top_eastern_trapp.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+    {
+      filename: "Vertical_contact_plane.ts",
+      geode_object: "TriangulatedSurface3D",
+    },
+  ]
+
+  function loaddataList() {
+    for (let index = 0; index < dataList.length; index++) {
+      const data = dataList[index]
+      api_fetch({
+        schema: back_schemas.opengeodeweb_back.save_viewable_file,
+        params: {
+          input_geode_object: data.geode_object,
+          filename: data.filename,
+        },
+      }).then((response) => {
+        const id = response.data.value.id
+        const schema = viewer_schemas.opengeodeweb_viewer.generic.register
+        viewer_call({
+          schema: schema,
+          params: {
+            id,
+          },
+        }).then(() => {
+          dataBaseStore.addItem(response.data.value.id, {
+            object_type: data.object_type,
+            geode_object: data.geode_object,
+            native_filename: data.filename,
+            viewable_filename: data.filename,
+            displayed_name: response.data.value.name,
+            vtk_js: {
+              binary_light_viewable: response.data.value.binary_light_viewable,
+            },
+          })
+        })
+      })
     }
-  );
-}
+  }
 
-async function openMenu(event) {
-  event.preventDefault();
-  menuX.value = event.clientX;
-  menuY.value = event.clientY;
+  watch(
+    () => [viewer_store.status, geode_store.status],
+    ([viewerStatus, geodeStatus]) => {
+      console.log("Status viewer changed:", viewerStatus)
+      console.log("Status geode changed:", geodeStatus)
 
-  await get_viewer_id(event.offsetX, event.offsetY);
-  menuStore.openMenu(
-    id.value,
-    event.clientX,
-    event.clientY,
-    containerWidth.value,
-    containerHeight.value
-  );
-}
+      console.log("Status", Status)
+      if (
+        viewerStatus === Status.CONNECTED &&
+        geodeStatus === Status.CONNECTED
+      ) {
+        console.log("loaddataList")
+        importWorkflow(dataList)
+      }
+    },
+    { immediate: true },
+  )
+
+  function resize() {
+    if (cardContainer.value) {
+      const { width, height } = useElementSize(cardContainer.value)
+      containerWidth.value = width.value
+      containerHeight.value = height.value
+    }
+  }
+  watch(
+    () => viewer_store.status,
+    (value) => {
+      if (value === Status.CONNECTED) {
+        resize()
+      }
+    },
+  )
+
+  onMounted(async () => {
+    if (viewer_store.status === Status.CONNECTED) {
+      resize()
+    }
+  })
+
+  async function get_viewer_id(x, y) {
+    const ids = dataStyleStore.selectedObjects
+    await viewer_call(
+      {
+        schema: viewer_schemas.opengeodeweb_viewer.viewer.picked_ids,
+        params: { x, y, ids },
+      },
+      {
+        response_function: (response) => {
+          const array_ids = response.array_ids
+          id.value = array_ids[0]
+        },
+      },
+    )
+  }
+
+  async function openMenu(event) {
+    event.preventDefault()
+    menuX.value = event.clientX
+    menuY.value = event.clientY
+
+    await get_viewer_id(event.offsetX, event.offsetY)
+    menuStore.openMenu(
+      id.value,
+      event.clientX,
+      event.clientY,
+      containerWidth.value,
+      containerHeight.value,
+    )
+  }
 </script>
