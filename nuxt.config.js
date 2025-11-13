@@ -1,3 +1,8 @@
+import path from "path"
+import { fileURLToPath } from "url"
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
@@ -7,7 +12,6 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2025-07-15",
   extends: ["@geode/opengeodeweb-front"],
-  devtools: { enabled: true },
   future: {
     compatibilityVersion: 4,
   },
@@ -65,7 +69,6 @@ export default defineNuxtConfig({
         autoImports: ["storeToRefs", "defineStore"],
       },
     ],
-    "@nuxt/devtools",
     "@vueuse/nuxt",
   ],
 
@@ -76,6 +79,14 @@ export default defineNuxtConfig({
   css: ["/assets/css/main.css"],
 
   vite: {
+    server: {
+      fs: {
+        allow: [
+          path.resolve(__dirname, "../../node_modules/@fontsource"),
+          path.resolve(__dirname, "../../node_modules/@mdi/font"),
+        ],
+      },
+    },
     optimizeDeps: {
       include: ["@kitware/vtk.js", "xmlbuilder2", "spark-md5"],
     },
@@ -88,4 +99,4 @@ export default defineNuxtConfig({
       ignored: ["**"],
     },
   },
-});
+})
