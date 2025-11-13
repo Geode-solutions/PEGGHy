@@ -167,8 +167,7 @@
         geodeStatus === Status.CONNECTED
       ) {
         console.log("loaddataList")
-        await importWorkflow(dataList)
-        hybridViewerStore.remoteRender()
+        importWorkflow(dataList).then(() => hybridViewerStore.remoteRender())
       }
     },
     { immediate: true },
