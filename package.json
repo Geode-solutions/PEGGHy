@@ -48,7 +48,6 @@
     "vtk.js": "33.1.0",
     "vue": "3.5.17",
     "vue-router": "4.5.1",
-    "vuetify": "3.8.12",
     "vuetify-nuxt-module": "0.18.7"
   }
 }
