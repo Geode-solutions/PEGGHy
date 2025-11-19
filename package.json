@@ -10,7 +10,7 @@
     "dev:nuxt": "npx nuxi dev --no-fork",
     "build": "nuxi build --prerender",
     "build:browser": "cross-env BROWSER=true npm run build",
-    "preview:browser": "nuxi preview",
+    "preview:browser": "npx serve .output/public",
     "test:browser": "node node_scripts/browser.js preview:browser",
     "generate": "nuxt generate",
     "compile_back": "node node_scripts/run_script_file.js compile back",
