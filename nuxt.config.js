@@ -12,6 +12,11 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2025-07-15",
   extends: ["@geode/opengeodeweb-front"],
+
+  alias: {
+    "@pegghy": __dirname + "/app/",
+    "@ogw_front": "@geode/opengeodeweb-front/app/",
+  },
   future: {
     compatibilityVersion: 4,
   },
@@ -92,12 +97,6 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       include: ["@kitware/vtk.js", "xmlbuilder2", "spark-md5"],
-    },
-    resolve: {
-      alias: {
-        "@ogw_front": "@geode/opengeodeweb-front/app",
-        "@pegghy": __dirname + "/app/",
-      },
     },
     watch: {
       ignored: ["**"],
