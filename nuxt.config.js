@@ -73,7 +73,7 @@ export default defineNuxtConfig({
   ],
 
   components: {
-    dirs: []
+    dirs: [],
   },
   imports: {
     dirs: ["/app/stores", "@geode/opengeodeweb-front/app/stores"],
