@@ -72,8 +72,11 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
   ],
 
+  components: {
+    dirs: []
+  },
   imports: {
-    dirs: ["/app/stores", "@geode/opengeodeweb-front/stores"],
+    dirs: ["/app/stores", "@geode/opengeodeweb-front/app/stores"],
   },
 
   css: ["/assets/css/main.css"],
@@ -92,7 +95,8 @@ export default defineNuxtConfig({
     },
     resolve: {
       alias: {
-        "@ogw_f": "@geode/opengeodeweb-front",
+        "@ogw_front": "@geode/opengeodeweb-front/app",
+        "@pegghy": __dirname + "/app/",
       },
     },
     watch: {
