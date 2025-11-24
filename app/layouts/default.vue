@@ -16,6 +16,6 @@
 <script setup>
 import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers.vue"
 
-import TopBar from "@/components/TopBar.vue"
-import Footer from "@/components/Footer.vue"
+import TopBar from "@pegghy/components/TopBar.vue"
+import Footer from "@pegghy/components/Footer.vue"
 </script>
