@@ -15,7 +15,6 @@ export default defineNuxtConfig({
 
   alias: {
     "@pegghy": __dirname + "/app/",
-    "@ogw_front": "@geode/opengeodeweb-front/app/",
   },
   future: {
     compatibilityVersion: 4,
