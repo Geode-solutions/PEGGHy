@@ -23,7 +23,7 @@
     "build_microservices": "npm run build_back && npm run build_viewer",
     "unpacked": "npm run build && electron-builder --dir",
     "package": "npm run build && electron-builder build --publish=never",
-    "test:e2e:browser": "npx playwright test --config ./tests/e2e/browser/playwright.config.js",
+    "test:e2e:browser": "npx playwright test --config ./tests/e2e/browser/playwright.config.js"
   },
   "devDependencies": {
     "@nuxt/test-utils": "3.20.1",
