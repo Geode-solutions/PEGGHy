@@ -25,8 +25,15 @@
 
 <script setup>
   import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json"
-  import { importWorkflow } from "@geode/opengeodeweb-front/utils/file_import_workflow"
-  import Status from "@ogw_f/utils/status.js"
+  import { importWorkflow } from "@ogw_front/utils/file_import_workflow"
+  import Status from "@ogw_front/utils/status.js"
+
+  import Launcher from "@ogw_front/components/Launcher.vue"
+  import HybridRenderingView from "@ogw_front/components/HybridRenderingView.vue"
+  import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree.vue"
+  import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu.vue"
+
+  import Partners from "@pegghy/components/Partners.vue"
 
   const query = useRoute().query
   if (query.geode_port) {

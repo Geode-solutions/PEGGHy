@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-  import { onUnmounted } from "vue"
+  import Partners from "@pegghy/components/Partners.vue"
   onUnmounted(() => {
     console.log("Partners page unmounted")
   })

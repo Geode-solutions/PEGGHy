@@ -12,6 +12,10 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2025-07-15",
   extends: ["@geode/opengeodeweb-front"],
+
+  alias: {
+    "@pegghy": __dirname + "/app/",
+  },
   future: {
     compatibilityVersion: 4,
   },
@@ -72,8 +76,11 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
   ],
 
+  components: {
+    dirs: [],
+  },
   imports: {
-    dirs: ["/app/stores", "@geode/opengeodeweb-front/stores"],
+    dirs: ["/app/stores", "@geode/opengeodeweb-front/app/stores"],
   },
 
   css: ["/assets/css/main.css"],
@@ -89,11 +96,6 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       include: ["@kitware/vtk.js", "xmlbuilder2", "spark-md5"],
-    },
-    resolve: {
-      alias: {
-        "@ogw_f": "@geode/opengeodeweb-front",
-      },
     },
     watch: {
       ignored: ["**"],
