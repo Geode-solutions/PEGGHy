@@ -69,96 +69,96 @@
   const { display_menu } = storeToRefs(menuStore)
 
   const dataList = [
-    { filename: "barrel.pl", geode_object: "EdgedCurve3D" },
+    { filename: "barrel.pl", geode_object_type: "EdgedCurve3D" },
     {
       filename: "block_central.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "block_east.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "block_west.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "metal_d5_east_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
       object_type: "mesh",
     },
     {
       filename: "metal_d5_west_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "metal_d10_east_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "metal_d10_west_deep.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "metal_d10_west_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "PVC_d10_east_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "PVC_d10_west_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "PVCwater_d10_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "Base_cut.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Main_fault_plane.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Reservoir_limit_plane.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_clay.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_eastern_sand.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
       object_type: "mesh",
     },
     {
       filename: "Top_folded_limestone.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Topo_from_photogram.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_western_sand.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_western_trapp.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_eastern_trapp.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Vertical_contact_plane.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
   ]
 
