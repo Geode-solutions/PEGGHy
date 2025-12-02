@@ -20,7 +20,7 @@ test.beforeEach(async ({ page }) => {
 })
 
 test("Microservices running", async ({ page }) => {
-  await page.waitForTimeout(10000)
+  await page.waitForTimeout(20000)
   await expect(page).toHaveScreenshot({
     path: `microservices-running-${process.platform}.png`,
   })
