@@ -1,6 +1,6 @@
 <template>
-  <Launcher v-if="infra_store.status != Status.CREATED" />
-  <Partners v-if="infra_store.status != Status.CREATED" />
+  <Launcher v-if="infraStore.status != Status.CREATED" />
+  <Partners v-if="infraStore.status != Status.CREATED" />
   <v-card
     v-else
     ref="cardContainer"
@@ -33,6 +33,13 @@
   import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree.vue"
   import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu.vue"
 
+  import { useViewerStore } from "@ogw_front/stores/viewer.js"
+  import { useGeodeStore } from "@ogw_front/stores/geode.js"
+  import { useInfraStore } from "@ogw_front/stores/infra.js"
+  import { useMenuStore } from "@ogw_front/stores/menu.js"
+  import { useDataStyleStore } from "@ogw_front/stores/data_style.js"
+  import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer.js"
+
   import Partners from "@pegghy/components/Partners.vue"
 
   const query = useRoute().query
@@ -53,7 +60,7 @@
     viewerStore.$patch({ default_local_port: query.viewer_port })
   }
 
-  const infra_store = useInfraStore()
+  const infraStore = useInfraStore()
   const viewer_store = useViewerStore()
   const geode_store = useGeodeStore()
   const menuStore = useMenuStore()
