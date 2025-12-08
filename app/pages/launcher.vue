@@ -4,9 +4,8 @@
 </template>
 
 <script setup>
-  import Status from "@ogw_front/utils/status.js"
+  import Status from "@ogw_front/utils/status"
   import Launcher from "@ogw_front/components/Launcher.vue"
-  import Status from "@ogw_front/utils/status.js"
   import { useInfraStore } from "@ogw_front/stores/infra"
   import Partners from "@pegghy/components/Partners.vue"
 

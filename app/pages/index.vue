@@ -33,12 +33,12 @@
   import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree.vue"
   import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu.vue"
 
-  import { useViewerStore } from "@ogw_front/stores/viewer.js"
-  import { useGeodeStore } from "@ogw_front/stores/geode.js"
-  import { useInfraStore } from "@ogw_front/stores/infra.js"
-  import { useMenuStore } from "@ogw_front/stores/menu.js"
-  import { useDataStyleStore } from "@ogw_front/stores/data_style.js"
-  import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer.js"
+  import { useViewerStore } from "@ogw_front/stores/viewer"
+  import { useGeodeStore } from "@ogw_front/stores/geode"
+  import { useInfraStore } from "@ogw_front/stores/infra"
+  import { useMenuStore } from "@ogw_front/stores/menu"
+  import { useDataStyleStore } from "@ogw_front/stores/data_style"
+  import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer"
 
   import Partners from "@pegghy/components/Partners.vue"
 

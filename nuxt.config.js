@@ -16,9 +16,6 @@ export default defineNuxtConfig({
   alias: {
     "@pegghy": __dirname + "/app/",
   },
-  future: {
-    compatibilityVersion: 4,
-  },
   vuetify: {
     defaults: {
       VImg: {
@@ -75,12 +72,8 @@ export default defineNuxtConfig({
     ],
     "@vueuse/nuxt",
   ],
-
-  components: {
-    dirs: [],
-  },
   imports: {
-    dirs: ["/app/stores", "@geode/opengeodeweb-front/app/stores"],
+    scan: false,
   },
 
   css: ["/assets/css/main.css"],
