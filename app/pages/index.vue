@@ -26,7 +26,7 @@
 <script setup>
   import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json"
   import { importWorkflow } from "@ogw_front/utils/file_import_workflow"
-  import Status from "@ogw_front/utils/status.js"
+  import Status from "@ogw_front/utils/status
 
   import Launcher from "@ogw_front/components/Launcher.vue"
   import HybridRenderingView from "@ogw_front/components/HybridRenderingView.vue"
@@ -61,8 +61,8 @@
   }
 
   const infraStore = useInfraStore()
-  const viewer_store = useViewerStore()
-  const geode_store = useGeodeStore()
+  const viewerStore = useViewerStore()
+  const geodeStore = useGeodeStore()
   const menuStore = useMenuStore()
   const dataStyleStore = useDataStyleStore()
   const hybridViewerStore = useHybridViewerStore()
@@ -170,7 +170,7 @@
   ]
 
   watch(
-    () => [viewer_store.status, geode_store.status],
+    () => [viewerStore.status, geodeStore.status],
     ([viewerStatus, geodeStatus]) => {
       console.log("Status viewer changed:", viewerStatus)
       console.log("Status geode changed:", geodeStatus)
@@ -195,7 +195,7 @@
     }
   }
   watch(
-    () => viewer_store.status,
+    () => viewerStore.status,
     (value) => {
       if (value === Status.CONNECTED) {
         resize()
@@ -204,7 +204,7 @@
   )
 
   onMounted(async () => {
-    if (viewer_store.status === Status.CONNECTED) {
+    if (viewerStore.status === Status.CONNECTED) {
       resize()
     }
   })
