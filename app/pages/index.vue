@@ -28,10 +28,10 @@
   import { importWorkflow } from "@ogw_front/utils/file_import_workflow"
   import Status from "@ogw_front/utils/status
 
-  import Launcher from "@ogw_front/components/Launcher.vue"
-  import HybridRenderingView from "@ogw_front/components/HybridRenderingView.vue"
-  import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree.vue"
-  import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu.vue"
+  import Launcher from "@ogw_front/components/Launcher"
+  import HybridRenderingView from "@ogw_front/components/HybridRenderingView"
+  import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree"
+  import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu"
 
   import { useViewerStore } from "@ogw_front/stores/viewer"
   import { useGeodeStore } from "@ogw_front/stores/geode"
@@ -40,7 +40,7 @@
   import { useDataStyleStore } from "@ogw_front/stores/data_style"
   import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer"
 
-  import Partners from "@pegghy/components/Partners.vue"
+  import Partners from "@pegghy/components/Partners"
 
   const query = useRoute().query
   if (query.geode_port) {

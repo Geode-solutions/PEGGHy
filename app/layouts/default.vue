@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-  import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers.vue"
+  import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers"
 
-  import TopBar from "@pegghy/components/TopBar.vue"
-  import Footer from "@pegghy/components/Footer.vue"
+  import TopBar from "@pegghy/components/TopBar"
+  import Footer from "@pegghy/components/Footer"
 </script>
