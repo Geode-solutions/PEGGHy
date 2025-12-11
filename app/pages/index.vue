@@ -1,6 +1,6 @@
 <template>
-  <Launcher v-if="infra_store.status != Status.CREATED" />
-  <Partners v-if="infra_store.status != Status.CREATED" />
+  <Launcher v-if="infraStore.status != Status.CREATED" />
+  <Partners v-if="infraStore.status != Status.CREATED" />
   <v-card
     v-else
     ref="cardContainer"
@@ -26,14 +26,21 @@
 <script setup>
   import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json"
   import { importWorkflow } from "@ogw_front/utils/file_import_workflow"
-  import Status from "@ogw_front/utils/status.js"
+  import Status from "@ogw_front/utils/status"
 
-  import Launcher from "@ogw_front/components/Launcher.vue"
-  import HybridRenderingView from "@ogw_front/components/HybridRenderingView.vue"
-  import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree.vue"
-  import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu.vue"
+  import Launcher from "@ogw_front/components/Launcher"
+  import HybridRenderingView from "@ogw_front/components/HybridRenderingView"
+  import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree"
+  import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu"
 
-  import Partners from "@pegghy/components/Partners.vue"
+  import { useViewerStore } from "@ogw_front/stores/viewer"
+  import { useGeodeStore } from "@ogw_front/stores/geode"
+  import { useInfraStore } from "@ogw_front/stores/infra"
+  import { useMenuStore } from "@ogw_front/stores/menu"
+  import { useDataStyleStore } from "@ogw_front/stores/data_style"
+  import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer"
+
+  import Partners from "@pegghy/components/Partners"
 
   const query = useRoute().query
   if (query.geode_port) {
@@ -53,9 +60,9 @@
     viewerStore.$patch({ default_local_port: query.viewer_port })
   }
 
-  const infra_store = useInfraStore()
-  const viewer_store = useViewerStore()
-  const geode_store = useGeodeStore()
+  const infraStore = useInfraStore()
+  const viewerStore = useViewerStore()
+  const geodeStore = useGeodeStore()
   const menuStore = useMenuStore()
   const dataStyleStore = useDataStyleStore()
   const hybridViewerStore = useHybridViewerStore()
@@ -163,7 +170,7 @@
   ]
 
   watch(
-    () => [viewer_store.status, geode_store.status],
+    () => [viewerStore.status, geodeStore.status],
     ([viewerStatus, geodeStatus]) => {
       console.log("Status viewer changed:", viewerStatus)
       console.log("Status geode changed:", geodeStatus)
@@ -188,7 +195,7 @@
     }
   }
   watch(
-    () => viewer_store.status,
+    () => viewerStore.status,
     (value) => {
       if (value === Status.CONNECTED) {
         resize()
@@ -197,7 +204,7 @@
   )
 
   onMounted(async () => {
-    if (viewer_store.status === Status.CONNECTED) {
+    if (viewerStore.status === Status.CONNECTED) {
       resize()
     }
   })

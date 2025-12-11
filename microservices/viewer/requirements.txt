@@ -5,4 +5,3 @@
 #    pip-compile --output-file=microservices/viewer/requirements.txt microservices/viewer/requirements.in
 #
 
-pegghy-viewer==1.*,>=1.0.1rc1
