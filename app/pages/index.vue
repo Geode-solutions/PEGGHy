@@ -42,13 +42,19 @@
 
   import Partners from "@pegghy/components/Partners"
 
+  const infraStore = useInfraStore()
+  const viewerStore = useViewerStore()
+  const geodeStore = useGeodeStore()
+  const menuStore = useMenuStore()
+  const dataStyleStore = useDataStyleStore()
+  const hybridViewerStore = useHybridViewerStore()
+
   const query = useRoute().query
   if (query.geode_port) {
     console.log(
       "Modifying geode port from query parameters to",
       query.geode_port,
     )
-    const geodeStore = useGeodeStore()
     geodeStore.$patch({ default_local_port: query.geode_port })
   }
   if (query.viewer_port) {
@@ -56,16 +62,8 @@
       "Modifying viewer port from query parameters to",
       query.viewer_port,
     )
-    const viewerStore = useViewerStore()
     viewerStore.$patch({ default_local_port: query.viewer_port })
   }
-
-  const infraStore = useInfraStore()
-  const viewerStore = useViewerStore()
-  const geodeStore = useGeodeStore()
-  const menuStore = useMenuStore()
-  const dataStyleStore = useDataStyleStore()
-  const hybridViewerStore = useHybridViewerStore()
 
   const menuX = ref(0)
   const menuY = ref(0)
