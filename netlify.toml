@@ -19,7 +19,6 @@ command = "cd .. && sed -i 's/\"0\\.0\\.0\"/\"latest\"/g' package.json && cat pa
 [context.production.environment]
 PROJECT = "/pegghy"
 SITE_BRANCH = ""
-RECAPTCHA_SITE_KEY = "6Lce72wgAAAAAOXrHyDxRQBhk6NDTD80MrXOlgbC"
 SITE_URL = "https://pegghy.geode-solutions.com"
 
 [context.branch-deploy]
@@ -27,5 +26,4 @@ command = "cd .. && sed -i 's/\"0\\.0\\.0\"/\"next\"/g' package.json && cat pack
 [context.branch-deploy.environment]
 PROJECT = "/pegghy"
 SITE_BRANCH = "/test"
-RECAPTCHA_SITE_KEY = "6Lce72wgAAAAAOXrHyDxRQBhk6NDTD80MrXOlgbC"
 SITE_URL = "https://next.pegghy.geode-solutions.com"
