@@ -179,7 +179,9 @@
         geodeStatus === Status.CONNECTED
       ) {
         console.log("loaddataList")
-        importWorkflow(dataList).then(() => hybridViewerStore.remoteRender())
+        importWorkflow(dataList).then(() =>
+          hybridViewerStore.syncRemoteCamera(),
+        )
       }
     },
     { immediate: true },
