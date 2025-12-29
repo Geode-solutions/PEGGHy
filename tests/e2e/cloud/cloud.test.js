@@ -19,7 +19,6 @@ test.beforeEach(async ({ page }) => {
   console.log({ button })
   await button.click()
   await page.waitForTimeout(140 * 1000)
-  await page.setViewportSize({ width: 1200, height: 800 })
 }, 150 * 1000)
 
 test("Microservices running", async ({ page }) => {
