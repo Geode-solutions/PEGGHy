@@ -1,5 +1,5 @@
 <script setup>
-  import { onUnmounted } from "vue"
+  import Partners from "@pegghy/components/Partners"
   onUnmounted(() => {
     console.log("Partners page unmounted")
   })
@@ -15,10 +15,3 @@
     </ClientOnly>
   </v-container>
 </template>
-
-<script setup>
-  import Partners from "@pegghy/components/Partners"
-  onUnmounted(() => {
-    console.log("Partners page unmounted")
-  })
-</script>
