@@ -1,3 +1,10 @@
+<script setup>
+  import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers"
+
+  import TopBar from "@pegghy/components/TopBar"
+  import Footer from "@pegghy/components/Footer"
+</script>
+
 <template>
   <v-app>
     <TopBar />
@@ -15,10 +22,3 @@
     <Footer />
   </v-app>
 </template>
-
-<script setup>
-  import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers"
-
-  import TopBar from "@pegghy/components/TopBar"
-  import Footer from "@pegghy/components/Footer"
-</script>
