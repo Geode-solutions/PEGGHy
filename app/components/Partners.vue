@@ -1,3 +1,46 @@
+<script setup>
+  import geode from "@/assets/img/geode.png"
+  import otelo from "@/assets/img/otelo.png"
+  import udl from "@/assets/img/udl.png"
+  import grandest from "@/assets/img/grandest.png"
+  import geolnancy from "@/assets/img/geolnancy.png"
+  import idlorraine from "@/assets/img/idlorraine.png"
+  import fondationgeol from "@/assets/img/fondation-geol.png"
+  import soletanche from "@/assets/img/soletanche.png"
+  import totalenergies from "@/assets/img/totalenergies.png"
+  import slb from "@/assets/img/slb.png"
+  import imerys from "@/assets/img/imerys.png"
+  import anteagroup from "@/assets/img/anteagroup.png"
+  import enerex from "@/assets/img/enerex.png"
+  import sercel from "@/assets/img/sercel.png"
+  import loritz from "@/assets/img/loritz.png"
+  import andra from "@/assets/img/andra.png"
+  import humens from "@/assets/img/humens.png"
+
+  const designers = [{ logo: otelo }, { logo: udl }]
+  const cofounders = [
+    { logo: grandest },
+    { logo: geolnancy },
+    { logo: idlorraine },
+  ]
+  const patronage = [
+    { logo: fondationgeol },
+    { logo: soletanche },
+    { logo: totalenergies },
+    { logo: slb },
+    { logo: imerys },
+    { logo: anteagroup },
+  ]
+  const partners = [
+    { logo: geode },
+    { logo: enerex },
+    { logo: sercel },
+    { logo: loritz },
+    { logo: andra },
+    { logo: humens },
+  ]
+</script>
+
 <template>
   <v-container fluid class="pa-0 mt-10" style="min-height: 100vh">
     <v-row class="pa-6" align="stretch" justify="center" dense>
@@ -109,49 +152,6 @@
     </v-row>
   </v-container>
 </template>
-
-<script setup>
-  import geode from "@/assets/img/geode.png"
-  import otelo from "@/assets/img/otelo.png"
-  import udl from "@/assets/img/udl.png"
-  import grandest from "@/assets/img/grandest.png"
-  import geolnancy from "@/assets/img/geolnancy.png"
-  import idlorraine from "@/assets/img/idlorraine.png"
-  import fondationgeol from "@/assets/img/fondation-geol.png"
-  import soletanche from "@/assets/img/soletanche.png"
-  import totalenergies from "@/assets/img/totalenergies.png"
-  import slb from "@/assets/img/slb.png"
-  import imerys from "@/assets/img/imerys.png"
-  import anteagroup from "@/assets/img/anteagroup.png"
-  import enerex from "@/assets/img/enerex.png"
-  import sercel from "@/assets/img/sercel.png"
-  import loritz from "@/assets/img/loritz.png"
-  import andra from "@/assets/img/andra.png"
-  import humens from "@/assets/img/humens.png"
-
-  const designers = [{ logo: otelo }, { logo: udl }]
-  const cofounders = [
-    { logo: grandest },
-    { logo: geolnancy },
-    { logo: idlorraine },
-  ]
-  const patronage = [
-    { logo: fondationgeol },
-    { logo: soletanche },
-    { logo: totalenergies },
-    { logo: slb },
-    { logo: imerys },
-    { logo: anteagroup },
-  ]
-  const partners = [
-    { logo: geode },
-    { logo: enerex },
-    { logo: sercel },
-    { logo: loritz },
-    { logo: andra },
-    { logo: humens },
-  ]
-</script>
 
 <style scoped>
   .glass-card {

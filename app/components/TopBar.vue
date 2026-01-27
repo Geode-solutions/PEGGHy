@@ -1,3 +1,42 @@
+<script setup>
+  import logoPegghy from "@/assets/img/pegghy.png"
+
+  const $route = useRoute()
+  const $router = useRouter()
+  const isPartnersPage = ref(false)
+
+  const icon = computed(() => {
+    return $route.path === "/partners" ? "mdi-home" : "mdi-information-variant"
+  })
+
+  const updateRouteState = () => {
+    isPartnersPage.value = $route.path === "/partners"
+    console.log("Route:", $route.path, "isPartnersPage:", isPartnersPage.value)
+  }
+
+  onMounted(() => {
+    updateRouteState()
+    $router.afterEach(() => {
+      updateRouteState()
+    })
+  })
+
+  watch(
+    () => $route.path,
+    (newPath) => {
+      console.log("Route changed to:", newPath)
+      updateRouteState()
+    },
+    { immediate: true },
+  )
+
+  const navigate = () => {
+    const path = isPartnersPage.value ? "/" : "/partners"
+    console.log("Navigating to:", path)
+    $router.push(path)
+  }
+</script>
+
 <template>
   <v-app-bar
     :key="$route.path"
@@ -38,44 +77,5 @@
     </v-row>
   </v-app-bar>
 </template>
-
-<script setup>
-  import logoPegghy from "@/assets/img/pegghy.png"
-
-  const $route = useRoute()
-  const $router = useRouter()
-  const isPartnersPage = ref(false)
-
-  const icon = computed(() => {
-    return $route.path === "/partners" ? "mdi-home" : "mdi-information-variant"
-  })
-
-  const updateRouteState = () => {
-    isPartnersPage.value = $route.path === "/partners"
-    console.log("Route:", $route.path, "isPartnersPage:", isPartnersPage.value)
-  }
-
-  onMounted(() => {
-    updateRouteState()
-    $router.afterEach(() => {
-      updateRouteState()
-    })
-  })
-
-  watch(
-    () => $route.path,
-    (newPath) => {
-      console.log("Route changed to:", newPath)
-      updateRouteState()
-    },
-    { immediate: true },
-  )
-
-  const navigate = () => {
-    const path = isPartnersPage.value ? "/" : "/partners"
-    console.log("Navigating to:", path)
-    $router.push(path)
-  }
-</script>
 
 <style scoped></style>

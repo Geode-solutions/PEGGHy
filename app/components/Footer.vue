@@ -1,3 +1,7 @@
+<script setup>
+  import logoGeode from "@/assets/img/geode-no-text.png"
+</script>
+
 <template>
   <v-footer
     app
@@ -21,7 +25,3 @@
     </v-row>
   </v-footer>
 </template>
-
-<script setup>
-  import logoGeode from "@/assets/img/geode-no-text.png"
-</script>
