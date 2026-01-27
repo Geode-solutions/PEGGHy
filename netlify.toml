@@ -10,22 +10,21 @@ package = "@netlify/plugin-functions-install-core"
 [build]
 base = "app"
 publish = "../dist"
+ignore = "exit 0"
 
 [functions]
 directory = "../netlify/functions"
 
 [context.production]
-command = "cd .. && sed -i 's/\"0\\.0\\.0\"/\"latest\"/g' package.json && npm i && npm run generate"
+command = "cd .. && sed -i 's/\"0\\.0\\.0\"/\"latest\"/g' package.json && cat package.json && npm i && npm list && npm run generate"
 [context.production.environment]
 PROJECT = "/pegghy"
 SITE_BRANCH = ""
-RECAPTCHA_SITE_KEY = "6Lce72wgAAAAAOXrHyDxRQBhk6NDTD80MrXOlgbC"
 SITE_URL = "https://pegghy.geode-solutions.com"
 
 [context.branch-deploy]
-command = "cd .. && sed -i 's/\"0\\.0\\.0\"/\"next\"/g' package.json && npm i && npm run generate"
+command = "cd .. && sed -i 's/\"0\\.0\\.0\"/\"next\"/g' package.json && cat package.json && npm i && npm list && npm run generate"
 [context.branch-deploy.environment]
 PROJECT = "/pegghy"
 SITE_BRANCH = "/test"
-RECAPTCHA_SITE_KEY = "6Lce72wgAAAAAOXrHyDxRQBhk6NDTD80MrXOlgbC"
 SITE_URL = "https://next.pegghy.geode-solutions.com"

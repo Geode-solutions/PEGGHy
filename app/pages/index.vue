@@ -1,7 +1,53 @@
+<template>
+  <Launcher v-if="infraStore.status != Status.CREATED" />
+  <Partners v-if="infraStore.status != Status.CREATED" />
+  <v-card
+    v-else
+    ref="cardContainer"
+    style="width: 100%; height: calc(100vh - 145px); border-radius: 15px"
+    @click.right="openMenu"
+  >
+    <HybridRenderingView>
+      <template #ui>
+        <ViewerTreeObjectTree />
+        <ViewerContextMenu
+          v-if="display_menu"
+          :id="menuStore.current_id || id"
+          :x="menuStore.menuX"
+          :y="menuStore.menuY"
+          :containerWidth="containerWidth"
+          :containerHeight="containerHeight"
+        />
+      </template>
+    </HybridRenderingView>
+  </v-card>
+</template>
+
 <script setup>
   import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json"
-  import { importWorkflow } from "@geode/opengeodeweb-front/utils/file_import_workflow"
-  import Status from "@ogw_f/utils/status.js"
+  import { importWorkflow } from "@ogw_front/utils/file_import_workflow"
+  import Status from "@ogw_front/utils/status"
+
+  import Launcher from "@ogw_front/components/Launcher"
+  import HybridRenderingView from "@ogw_front/components/HybridRenderingView"
+  import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree"
+  import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu"
+
+  import { useViewerStore } from "@ogw_front/stores/viewer"
+  import { useGeodeStore } from "@ogw_front/stores/geode"
+  import { useInfraStore } from "@ogw_front/stores/infra"
+  import { useMenuStore } from "@ogw_front/stores/menu"
+  import { useDataStyleStore } from "@ogw_front/stores/data_style"
+  import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer"
+
+  import Partners from "@pegghy/components/Partners"
+
+  const infraStore = useInfraStore()
+  const viewerStore = useViewerStore()
+  const geodeStore = useGeodeStore()
+  const menuStore = useMenuStore()
+  const dataStyleStore = useDataStyleStore()
+  const hybridViewerStore = useHybridViewerStore()
 
   const query = useRoute().query
   if (query.geode_port) {
@@ -9,7 +55,6 @@
       "Modifying geode port from query parameters to",
       query.geode_port,
     )
-    const geodeStore = useGeodeStore()
     geodeStore.$patch({ default_local_port: query.geode_port })
   }
   if (query.viewer_port) {
@@ -17,16 +62,8 @@
       "Modifying viewer port from query parameters to",
       query.viewer_port,
     )
-    const viewerStore = useViewerStore()
     viewerStore.$patch({ default_local_port: query.viewer_port })
   }
-
-  const infra_store = useInfraStore()
-  const viewer_store = useViewerStore()
-  const geode_store = useGeodeStore()
-  const menuStore = useMenuStore()
-  const dataStyleStore = useDataStyleStore()
-  const hybridViewerStore = useHybridViewerStore()
 
   const menuX = ref(0)
   const menuY = ref(0)
@@ -37,101 +74,101 @@
   const { display_menu } = storeToRefs(menuStore)
 
   const dataList = [
-    { filename: "barrel.pl", geode_object: "EdgedCurve3D" },
+    { filename: "barrel.pl", geode_object_type: "EdgedCurve3D" },
     {
       filename: "block_central.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "block_east.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "block_west.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "metal_d5_east_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
       object_type: "mesh",
     },
     {
       filename: "metal_d5_west_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "metal_d10_east_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "metal_d10_west_deep.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "metal_d10_west_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "PVC_d10_east_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "PVC_d10_west_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "PVCwater_d10_shallow.pl",
-      geode_object: "EdgedCurve3D",
+      geode_object_type: "EdgedCurve3D",
     },
     {
       filename: "Base_cut.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Main_fault_plane.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Reservoir_limit_plane.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_clay.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_eastern_sand.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
       object_type: "mesh",
     },
     {
       filename: "Top_folded_limestone.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Topo_from_photogram.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_western_sand.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_western_trapp.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Top_eastern_trapp.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
     {
       filename: "Vertical_contact_plane.ts",
-      geode_object: "TriangulatedSurface3D",
+      geode_object_type: "TriangulatedSurface3D",
     },
   ]
 
   watch(
-    () => [viewer_store.status, geode_store.status],
+    () => [viewerStore.status, geodeStore.status],
     ([viewerStatus, geodeStatus]) => {
       console.log("Status viewer changed:", viewerStatus)
       console.log("Status geode changed:", geodeStatus)
@@ -142,7 +179,9 @@
         geodeStatus === Status.CONNECTED
       ) {
         console.log("loaddataList")
-        importWorkflow(dataList).then(() => hybridViewerStore.remoteRender())
+        importWorkflow(dataList).then(() =>
+          hybridViewerStore.syncRemoteCamera(),
+        )
       }
     },
     { immediate: true },
@@ -156,7 +195,7 @@
     }
   }
   watch(
-    () => viewer_store.status,
+    () => viewerStore.status,
     (value) => {
       if (value === Status.CONNECTED) {
         resize()
@@ -165,7 +204,7 @@
   )
 
   onMounted(async () => {
-    if (viewer_store.status === Status.CONNECTED) {
+    if (viewerStore.status === Status.CONNECTED) {
       resize()
     }
   })

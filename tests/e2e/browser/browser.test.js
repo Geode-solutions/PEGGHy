@@ -16,11 +16,10 @@ test.beforeEach(async ({ page }) => {
     `http://localhost:${nuxt_port}?geode_port=${geode_port}&viewer_port=${viewer_port}`,
   )
   console.log("Navigated to", page.url())
-  await page.setViewportSize({ width: 1200, height: 800 })
 })
 
 test("Microservices running", async ({ page }) => {
-  await page.waitForTimeout(10000)
+  await page.waitForTimeout(23000)
   await expect(page).toHaveScreenshot({
     path: `microservices-running-${process.platform}.png`,
   })

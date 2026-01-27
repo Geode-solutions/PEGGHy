@@ -1,7 +1,15 @@
-<script setup>
-  import Status from "@ogw_f/utils/status.js"
+<template>
+  <Launcher v-if="infraStore.status != Status.CREATED" />
+  <Partners v-else />
+</template>
 
-  const infra_store = useInfraStore()
+<script setup>
+  import Status from "@ogw_front/utils/status"
+  import Launcher from "@ogw_front/components/Launcher"
+  import { useInfraStore } from "@ogw_front/stores/infra"
+  import Partners from "@pegghy/components/Partners"
+
+  const infraStore = useInfraStore()
 </script>
 
 <template>

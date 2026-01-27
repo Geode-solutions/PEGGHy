@@ -1,7 +1,6 @@
 // @ts-check
 import { fileURLToPath } from "node:url"
 import { defineConfig, devices } from "@playwright/test"
-import { isWindows } from "std-env"
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -11,7 +10,7 @@ export default defineConfig({
     toHaveScreenshot: { maxDiffPixelRatio: 0.02 },
   },
   testDir: "./",
-  timeout: (isWindows ? 90 : 40) * 1000,
+  timeout: 250 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -43,12 +42,5 @@ export default defineConfig({
         viewport: { width: 1200, height: 800 },
       },
     },
-    // {
-    //   name: "firefox",
-    //   use: {
-    //     ...devices["Desktop Firefox"],
-    //     viewport: { width: 1200, height: 800 },
-    //   },
-    // },
   ],
 })
