@@ -1,5 +1,8 @@
 import { expect, test } from "@playwright/test"
-import { execSync } from "child_process"
+import { execSync } from "node:child_process"
+
+const WAIT_TIME = 140000
+const TIMEOUT = 150000
 
 test.beforeEach(async ({ page }) => {
   page.on("console", (msg) => console.log(`Browser console: ${msg.text()}`))
@@ -18,8 +21,8 @@ test.beforeEach(async ({ page }) => {
   const button = await page.getByRole("button", { name: "Launch the app" })
   console.log({ button })
   await button.click()
-  await page.waitForTimeout(140 * 1000)
-}, 150 * 1000)
+  await page.waitForTimeout(WAIT_TIME)
+}, TIMEOUT)
 
 test("Microservices running", async ({ page }) => {
   await expect(page).toHaveScreenshot({
