@@ -1,8 +1,8 @@
 <script setup>
   import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers"
 
-  import TopBar from "@pegghy/components/TopBar"
   import Footer from "@pegghy/components/Footer"
+  import TopBar from "@pegghy/components/TopBar"
 </script>
 
 <template>
