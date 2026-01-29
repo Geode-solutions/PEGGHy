@@ -153,10 +153,15 @@
         viewerStatus === Status.CONNECTED &&
         geodeStatus === Status.CONNECTED
       ) {
-        console.log("loaddataList")
-        importWorkflow(dataList).then(() =>
-          hybridViewerStore.syncRemoteCamera(),
-        )
+        const start = Date.now()
+        importWorkflow(dataList).then(() => {
+          console.log(
+            "importWorkflow duration :",
+            (Date.now() - start) / 1000,
+            "s",
+          )
+          hybridViewerStore.syncRemoteCamera()
+        })
       }
     },
     { immediate: true },
