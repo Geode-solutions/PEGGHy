@@ -1,21 +1,23 @@
 <script setup>
-  import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json"
-  import { importWorkflow } from "@ogw_front/utils/file_import_workflow"
   import Status from "@ogw_front/utils/status"
+  import { importWorkflow } from "@ogw_front/utils/file_import_workflow"
+  import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json"
 
-  import Launcher from "@ogw_front/components/Launcher"
   import HybridRenderingView from "@ogw_front/components/HybridRenderingView"
-  import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree"
+  import Launcher from "@ogw_front/components/Launcher"
   import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu"
+  import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree"
 
-  import { useViewerStore } from "@ogw_front/stores/viewer"
+  import { useDataStyleStore } from "@ogw_front/stores/data_style"
   import { useGeodeStore } from "@ogw_front/stores/geode"
+  import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer"
   import { useInfraStore } from "@ogw_front/stores/infra"
   import { useMenuStore } from "@ogw_front/stores/menu"
-  import { useDataStyleStore } from "@ogw_front/stores/data_style"
-  import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer"
+  import { useViewerStore } from "@ogw_front/stores/viewer"
 
   import Partners from "@pegghy/components/Partners"
+
+  const MS_TO_SECONDS = 1000
 
   const infraStore = useInfraStore()
   const viewerStore = useViewerStore()
@@ -24,7 +26,7 @@
   const dataStyleStore = useDataStyleStore()
   const hybridViewerStore = useHybridViewerStore()
 
-  const query = useRoute().query
+  const { query } = useRoute()
   if (query.geode_port) {
     console.log(
       "Modifying geode port from query parameters to",
@@ -144,7 +146,7 @@
 
   watch(
     () => [viewerStore.status, geodeStore.status],
-    ([viewerStatus, geodeStatus]) => {
+    async ([viewerStatus, geodeStatus]) => {
       console.log("Status viewer changed:", viewerStatus)
       console.log("Status geode changed:", geodeStatus)
 
@@ -154,14 +156,17 @@
         geodeStatus === Status.CONNECTED
       ) {
         const start = Date.now()
-        importWorkflow(dataList).then(() => {
+        try {
+          await importWorkflow(dataList)
           console.log(
             "importWorkflow duration :",
-            (Date.now() - start) / 1000,
+            (Date.now() - start) / MS_TO_SECONDS,
             "s",
           )
           hybridViewerStore.syncRemoteCamera()
-        })
+        } catch (error) {
+          console.error("Error during importWorkflow:", error)
+        }
       }
     },
     { immediate: true },
@@ -183,7 +188,7 @@
     },
   )
 
-  onMounted(async () => {
+  onMounted(() => {
     if (viewerStore.status === Status.CONNECTED) {
       resize()
     }
@@ -198,8 +203,9 @@
       },
       {
         response_function: (response) => {
-          const array_ids = response.array_ids
-          id.value = array_ids[0]
+          const { array_ids } = response
+          const [first_id] = array_ids
+          id.value = first_id
         },
       },
     )

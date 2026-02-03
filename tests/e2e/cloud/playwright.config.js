@@ -1,6 +1,8 @@
 // @ts-check
-import { fileURLToPath } from "node:url"
 import { defineConfig, devices } from "@playwright/test"
+import { fileURLToPath } from "node:url"
+
+const TIMEOUT = 250000
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -10,11 +12,11 @@ export default defineConfig({
     toHaveScreenshot: { maxDiffPixelRatio: 0.02 },
   },
   testDir: "./",
-  timeout: 300 * 1000,
+  timeout: TIMEOUT,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: Boolean(process.env.CI),
   /* Retry on CI only */
   retries: 0,
   /* Opt out of parallel tests on CI. */

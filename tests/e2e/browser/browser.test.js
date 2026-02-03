@@ -2,10 +2,11 @@
 
 // Third party imports
 import { expect, test } from "@playwright/test"
-import { isWindows } from "std-env"
 
 // Local imports
 import { run_browser_wrapper } from "../../../utils/local"
+
+const TIMEOUT = 23000
 
 test.beforeEach(async ({ page }) => {
   const ports = await run_browser_wrapper(`preview:browser`)
@@ -19,7 +20,7 @@ test.beforeEach(async ({ page }) => {
 })
 
 test("Microservices running", async ({ page }) => {
-  await page.waitForTimeout(23000)
+  await page.waitForTimeout(TIMEOUT)
   await expect(page).toHaveScreenshot({
     path: `microservices-running-${process.platform}.png`,
   })

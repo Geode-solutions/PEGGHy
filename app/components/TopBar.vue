@@ -5,20 +5,18 @@
   const $router = useRouter()
   const isPartnersPage = ref(false)
 
-  const icon = computed(() => {
-    return $route.path === "/partners" ? "mdi-home" : "mdi-information-variant"
-  })
+  const icon = computed(() =>
+    $route.path === "/partners" ? "mdi-home" : "mdi-information-variant",
+  )
 
-  const updateRouteState = () => {
+  function updateRouteState() {
     isPartnersPage.value = $route.path === "/partners"
     console.log("Route:", $route.path, "isPartnersPage:", isPartnersPage.value)
   }
 
   onMounted(() => {
     updateRouteState()
-    $router.afterEach(() => {
-      updateRouteState()
-    })
+    $router.afterEach(updateRouteState)
   })
 
   watch(
@@ -30,7 +28,7 @@
     { immediate: true },
   )
 
-  const navigate = () => {
+  function navigate() {
     const path = isPartnersPage.value ? "/" : "/partners"
     console.log("Navigating to:", path)
     $router.push(path)
