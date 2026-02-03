@@ -17,6 +17,8 @@
 
   import Partners from "@pegghy/components/Partners"
 
+  const MS_TO_SECONDS = 1000
+
   const infraStore = useInfraStore()
   const viewerStore = useViewerStore()
   const geodeStore = useGeodeStore()
@@ -144,7 +146,7 @@
 
   watch(
     () => [viewerStore.status, geodeStore.status],
-    ([viewerStatus, geodeStatus]) => {
+    async ([viewerStatus, geodeStatus]) => {
       console.log("Status viewer changed:", viewerStatus)
       console.log("Status geode changed:", geodeStatus)
 
@@ -153,10 +155,18 @@
         viewerStatus === Status.CONNECTED &&
         geodeStatus === Status.CONNECTED
       ) {
-        console.log("loaddataList")
-        return importWorkflow(dataList).then(() =>
-          hybridViewerStore.syncRemoteCamera(),
-        )
+        const start = Date.now()
+        try {
+          await importWorkflow(dataList)
+          console.log(
+            "importWorkflow duration :",
+            (Date.now() - start) / MS_TO_SECONDS,
+            "s",
+          )
+          hybridViewerStore.syncRemoteCamera()
+        } catch (error) {
+          console.error("Error during importWorkflow:", error)
+        }
       }
     },
     { immediate: true },
