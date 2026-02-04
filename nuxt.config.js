@@ -1,5 +1,5 @@
-import path from "path"
-import { fileURLToPath } from "url"
+import { fileURLToPath } from "node:url"
+import path from "node:path"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   extends: ["@geode/opengeodeweb-front"],
 
   alias: {
-    "@pegghy": __dirname + "/app/",
+    "@pegghy": `${__dirname}/app/`,
   },
   vuetify: {
     defaults: {
@@ -50,7 +50,7 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: "PEGGHy",
       meta: [
-        { charset: "utf-8" },
+        { charset: "utf8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
           hid: "description",

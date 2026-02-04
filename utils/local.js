@@ -1,7 +1,8 @@
 // Standard library imports
-import os from "os"
-import path from "path"
+import os from "node:os"
+import path from "node:path"
 import { v4 as uuidv4 } from "uuid"
+
 // Third party imports
 
 // Local imports
@@ -29,11 +30,8 @@ async function viewer_microservice() {
 async function run_browser_wrapper(script_name) {
   const pegghy_dir = path.join(os.tmpdir(), "pegghy")
   const project_folder_path = create_path(path.join(pegghy_dir, uuidv4()))
-  console.log("project_folder_path", project_folder_path)
   const { back_name, back_path } = await back_microservice()
-  console.log("back_command", back_path, back_name)
   const { viewer_name, viewer_path } = await viewer_microservice()
-  console.log("viewer_command", viewer_path, viewer_name)
   return run_browser(script_name, {
     back: {
       executable_name: back_name,
