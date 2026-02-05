@@ -9,6 +9,7 @@
   import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree"
 
   import { useDataStyleStore } from "@ogw_front/stores/data_style"
+  import { useDataStore } from "@ogw_front/stores/data"
   import { useGeodeStore } from "@ogw_front/stores/geode"
   import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer"
   import { useInfraStore } from "@ogw_front/stores/infra"
@@ -23,6 +24,7 @@
   const viewerStore = useViewerStore()
   const geodeStore = useGeodeStore()
   const menuStore = useMenuStore()
+  const dataStore = useDataStore()
   const dataStyleStore = useDataStyleStore()
   const hybridViewerStore = useHybridViewerStore()
 
@@ -156,17 +158,17 @@
         geodeStatus === Status.CONNECTED
       ) {
         const start = Date.now()
-        try {
-          await importWorkflow(dataList)
-          console.log(
-            "importWorkflow duration :",
-            (Date.now() - start) / MS_TO_SECONDS,
-            "s",
-          )
-          hybridViewerStore.syncRemoteCamera()
-        } catch (error) {
-          console.error("Error during importWorkflow:", error)
-        }
+        // try {
+        await importWorkflow(dataList)
+        console.log(
+          "importWorkflow duration :",
+          (Date.now() - start) / MS_TO_SECONDS,
+          "s",
+        )
+        hybridViewerStore.syncRemoteCamera()
+        // } catch (error) {
+        //   console.error("Error during importWorkflow:", error)
+        // }
       }
     },
     { immediate: true },
@@ -195,34 +197,56 @@
   })
 
   async function get_viewer_id(x, y) {
-    const ids = dataStyleStore.selectedObjects
-    await viewer_call(
-      {
-        schema: viewer_schemas.opengeodeweb_viewer.viewer.picked_ids,
-        params: { x, y, ids },
-      },
+    const ids = Object.keys(dataStyleStore.styles)
+    await viewerStore.request(
+      viewer_schemas.opengeodeweb_viewer.viewer.picked_ids,
+      { x, y, ids },
       {
         response_function: (response) => {
-          const { array_ids } = response
-          const [first_id] = array_ids
-          id.value = first_id
+          const array_ids = response.array_ids
+          id.value = array_ids[0]
         },
       },
     )
   }
 
-  async function openMenu(event) {
-    event.preventDefault()
-    menuX.value = event.clientX
-    menuY.value = event.clientY
+  async function handleTreeMenu({ event, itemId }) {
+    const rect = cardContainer.value.$el.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const yUI = event.clientY - rect.top
 
-    await get_viewer_id(event.offsetX, event.offsetY)
+    const item = dataStore.getItem(itemId)
+
     menuStore.openMenu(
-      id.value,
-      event.clientX,
-      event.clientY,
+      itemId,
+      x,
+      yUI,
       containerWidth.value,
       containerHeight.value,
+      rect.top,
+      rect.left,
+      item.value,
+    )
+  }
+
+  async function openMenu(event) {
+    const rect = cardContainer.value.$el.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const yPicking = containerHeight.value - (event.clientY - rect.top)
+    const yUI = event.clientY - rect.top
+
+    await get_viewer_id(x, yPicking)
+    const item = dataStore.getItem(id.value)
+
+    menuStore.openMenu(
+      id.value,
+      x,
+      yUI,
+      containerWidth.value,
+      containerHeight.value,
+      rect.top,
+      rect.left,
+      item.value,
     )
   }
 </script>
@@ -238,7 +262,7 @@
   >
     <HybridRenderingView>
       <template #ui>
-        <ViewerTreeObjectTree />
+        <ViewerTreeObjectTree @show-menu="handleTreeMenu" />
         <ViewerContextMenu
           v-if="display_menu"
           :id="menuStore.current_id || id"
