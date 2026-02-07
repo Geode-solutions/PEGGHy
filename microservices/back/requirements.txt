@@ -5,4 +5,4 @@
 #    pip-compile --output-file=microservices/back/requirements.txt microservices/back/requirements.in
 #
 
-pegghy-back==1.*,>=1.1.2rc1
+pegghy-back==1.*,>=1.1.2
