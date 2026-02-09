@@ -1,4 +1,5 @@
 <script setup>
+  import FeedbackErrorBanner from "@ogw_front/components/FeedBack/ErrorBanner"
   import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers"
 
   import Footer from "@pegghy/components/Footer"
@@ -14,6 +15,7 @@
     >
       <v-row class="fill-height pa-2 mr-1 ml-1">
         <v-col cols="12" class="pa-1">
+          <FeedbackErrorBanner style="border-radius: 15px" />
           <NuxtPage style="z-index: 1" />
         </v-col>
       </v-row>
