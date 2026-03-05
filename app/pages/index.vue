@@ -215,7 +215,7 @@
     const x = event.clientX - rect.left
     const yUI = event.clientY - rect.top
 
-    const item = dataStore.getItem(itemId)
+    const item = await dataStore.item(itemId)
 
     menuStore.openMenu(
       itemId,
@@ -225,7 +225,7 @@
       containerHeight.value,
       rect.top,
       rect.left,
-      item.value,
+      item,
     )
   }
 
@@ -236,7 +236,7 @@
     const yUI = event.clientY - rect.top
 
     await get_viewer_id(x, yPicking)
-    const item = dataStore.getItem(id.value)
+    const item = await dataStore.item(id.value)
 
     menuStore.openMenu(
       id.value,
@@ -246,7 +246,7 @@
       containerHeight.value,
       rect.top,
       rect.left,
-      item.value,
+      item,
     )
   }
 </script>
