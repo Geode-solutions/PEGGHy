@@ -7,7 +7,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       API_URL: "api_pegghy.geode-solutions.com",
-      RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
+      BACK_PATH: path.join(__dirname, "microservices", "back"),
+      BACK_COMMAND: "pegghy-back",
+      VIEWER_PATH: path.join(__dirname, "microservices", "viewer"),
+      VIEWER_COMMAND: "pegghy-viewer",
     },
   },
   compatibilityDate: "2025-07-15",
