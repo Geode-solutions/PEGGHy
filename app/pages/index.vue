@@ -158,7 +158,6 @@
         geodeStatus === Status.CONNECTED
       ) {
         const start = Date.now()
-        // try {
         await importWorkflow(dataList)
         console.log(
           "importWorkflow duration :",
@@ -166,9 +165,6 @@
           "s",
         )
         hybridViewerStore.syncRemoteCamera()
-        // } catch (error) {
-        //   console.error("Error during importWorkflow:", error)
-        // }
       }
     },
     { immediate: true },
