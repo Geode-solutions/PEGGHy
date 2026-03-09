@@ -1,7 +1,7 @@
 <script setup>
   import Launcher from "@ogw_front/components/Launcher"
   import Partners from "@pegghy/components/Partners"
-  import Status from "@ogw_front/utils/status"
+  import { Status } from "@ogw_front/utils/status"
   import { useInfraStore } from "@ogw_front/stores/infra"
 
   const infraStore = useInfraStore()

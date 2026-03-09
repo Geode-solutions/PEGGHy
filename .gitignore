@@ -23,10 +23,13 @@ logs
 .env.*
 !.env.example
 
-#Other
+# Playwright
+/playwright-report
+/test-results
+
+# Other
 /microservices/back/dist
 /microservices/viewer/dist
 /microservices/back/venv
 /microservices/viewer/venv
-/server
 VTK.txt
