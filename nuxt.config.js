@@ -7,10 +7,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       API_URL: "api_pegghy.geode-solutions.com",
-      BACK_PATH: path.join(__dirname, "microservices", "back"),
-      BACK_COMMAND: "pegghy-back",
-      VIEWER_PATH: path.join(__dirname, "microservices", "viewer"),
-      VIEWER_COMMAND: "pegghy-viewer",
+      COMMAND_BACK: "pegghy-back",
+      COMMAND_VIEWER: "pegghy-viewer",
     },
   },
   compatibilityDate: "2025-07-15",
