@@ -1,5 +1,9 @@
+// Node imports
 import { fileURLToPath } from "node:url"
 import path from "node:path"
+
+// Local imports
+import package_json from "./package.json"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -9,6 +13,7 @@ export default defineNuxtConfig({
       API_URL: "api_pegghy.geode-solutions.com",
       BACK_PATH: path.join(__dirname, "microservices", "back"),
       BACK_COMMAND: "pegghy-back",
+      PROJECT: package_json.name,
       VIEWER_PATH: path.join(__dirname, "microservices", "viewer"),
       VIEWER_COMMAND: "pegghy-viewer",
     },
