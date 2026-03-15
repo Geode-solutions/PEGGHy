@@ -5,6 +5,7 @@ import path from "node:path"
 // Local imports
 import package_json from "./package.json"
 
+// Constants
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineNuxtConfig({
