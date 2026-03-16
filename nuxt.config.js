@@ -1,6 +1,11 @@
+// Node imports
 import { fileURLToPath } from "node:url"
 import path from "node:path"
 
+// Local imports
+import package_json from "./package.json"
+
+// Constants
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineNuxtConfig({
@@ -9,6 +14,7 @@ export default defineNuxtConfig({
       API_URL: "api_pegghy.geode-solutions.com",
       COMMAND_BACK: "pegghy-back",
       COMMAND_VIEWER: "pegghy-viewer",
+      PROJECT: package_json.name,
     },
   },
   compatibilityDate: "2025-07-15",
