@@ -2,7 +2,7 @@
 import { defineConfig, devices } from "@playwright/test"
 import { fileURLToPath } from "node:url"
 
-const TIMEOUT = 250000
+const TIMEOUT = 250_000
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -26,7 +26,6 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
     nuxt: {
       rootDir: fileURLToPath(new URL(".", import.meta.url)),
       dev: true,
