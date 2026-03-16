@@ -1,6 +1,6 @@
 <script setup>
-  import FeedbackErrorBanner from "@ogw_front/components/FeedBack/ErrorBanner"
   import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers"
+  import FeedbackErrorBanner from "@ogw_front/components/FeedBack/ErrorBanner"
 
   import Footer from "@pegghy/components/Footer"
   import TopBar from "@pegghy/components/TopBar"

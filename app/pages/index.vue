@@ -8,8 +8,8 @@
   import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu"
   import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree"
 
-  import { useDataStyleStore } from "@ogw_front/stores/data_style"
   import { useDataStore } from "@ogw_front/stores/data"
+  import { useDataStyleStore } from "@ogw_front/stores/data_style"
   import { useGeodeStore } from "@ogw_front/stores/geode"
   import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer"
   import { useInfraStore } from "@ogw_front/stores/infra"
@@ -199,8 +199,8 @@
       { x, y, ids },
       {
         response_function: (response) => {
-          const array_ids = response.array_ids
-          id.value = array_ids[0]
+          const [array_ids] = response.array_ids
+          id.value = array_ids
         },
       },
     )
