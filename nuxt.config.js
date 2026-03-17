@@ -14,6 +14,7 @@ export default defineNuxtConfig({
       API_URL: "api_pegghy.geode-solutions.com",
       COMMAND_BACK: "pegghy-back",
       COMMAND_VIEWER: "pegghy-viewer",
+      NUXT_ROOT_PATH: __dirname,
       PROJECT: package_json.name,
     },
   },

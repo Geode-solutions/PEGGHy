@@ -28,8 +28,7 @@ logs
 /test-results
 
 # Other
-/microservices/back/dist
-/microservices/viewer/dist
-/microservices/back/venv
-/microservices/viewer/venv
 VTK.txt
+/build
+/pegghy-back
+/pegghy-viewer
