@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test"
 import { execSync } from "node:child_process"
 
-const WAIT_TIME = 140000
-const TIMEOUT = 150000
+const WAIT_TIME = 140_000
+const TIMEOUT = 150_000
 
 test.beforeEach(async ({ page }) => {
   page.on("console", (msg) => console.log(`Browser console: ${msg.text()}`))
