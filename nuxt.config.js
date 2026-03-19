@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   extends: ["@geode/opengeodeweb-front"],
 
   alias: {
-    "@pegghy": `${__dirname}/app/`,
+    "@pegghy": path.resolve(__dirname, "app"),
   },
   vuetify: {
     defaults: {
