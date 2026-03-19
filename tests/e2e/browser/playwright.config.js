@@ -1,10 +1,10 @@
 // @ts-check
-import { defineConfig, devices } from "@playwright/test";
-import { fileURLToPath } from "node:url";
-import { isWindows } from "std-env";
+import { defineConfig, devices } from "@playwright/test"
+import { fileURLToPath } from "node:url"
+import { isWindows } from "std-env"
 
-const WINDOWS_TIMEOUT = 90_000;
-const TIMEOUT = 40_000;
+const WINDOWS_TIMEOUT = 90_000
+const TIMEOUT = 40_000
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -46,4 +46,4 @@ export default defineConfig({
       },
     },
   ],
-});
+})
