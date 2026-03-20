@@ -23,6 +23,7 @@
   "dependencies": {
     "@geode/opengeodeweb-back": "0.0.0",
     "@geode/opengeodeweb-front": "0.0.0",
+    "@geode/opengeodeweb-microservice": "0.0.0",
     "@geode/opengeodeweb-viewer": "0.0.0",
     "kill-port": "2.0.1"
   },
@@ -32,12 +33,5 @@
     "concurrently": "9.2.1",
     "cross-env": "10.0.0",
     "playwright": "1.54.1"
-  },
-  "dependencies": {
-    "@geode/opengeodeweb-back": "0.0.0",
-    "@geode/opengeodeweb-front": "0.0.0",
-    "@geode/opengeodeweb-microservice": "0.0.0",
-    "@geode/opengeodeweb-viewer": "0.0.0",
-    "kill-port": "2.0.1"
   }
 }
