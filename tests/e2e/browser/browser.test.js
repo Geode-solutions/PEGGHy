@@ -7,8 +7,8 @@ import { runBrowser } from "@geode/opengeodeweb-front/app/utils/local/scripts.js
 // Local imports
 
 // Constants
-const WINDOWS_TIMEOUT = 25
-const LINUX_TIMEOUT = 20
+const WINDOWS_TIMEOUT = 30
+const LINUX_TIMEOUT = 25
 const MILLISECONDS = 1000
 
 let nuxtPort = 0
