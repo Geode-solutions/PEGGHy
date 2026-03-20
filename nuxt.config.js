@@ -1,12 +1,12 @@
 // Node imports
-import { fileURLToPath } from "node:url"
-import path from "node:path"
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 
 // Local imports
-import package_json from "./package.json"
+import package_json from "./package.json";
 
 // Constants
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -102,4 +102,4 @@ export default defineNuxtConfig({
       ignored: ["**"],
     },
   },
-})
+});
