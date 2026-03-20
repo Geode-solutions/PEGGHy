@@ -12,18 +12,17 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       API_URL: "api_pegghy.geode-solutions.com",
-      BACK_PATH: path.join(__dirname, "microservices", "back"),
-      BACK_COMMAND: "pegghy-back",
+      COMMAND_BACK: "pegghy-back",
+      COMMAND_VIEWER: "pegghy-viewer",
+      NUXT_ROOT_PATH: __dirname,
       PROJECT: package_json.name,
-      VIEWER_PATH: path.join(__dirname, "microservices", "viewer"),
-      VIEWER_COMMAND: "pegghy-viewer",
     },
   },
   compatibilityDate: "2025-07-15",
   extends: ["@geode/opengeodeweb-front"],
 
   alias: {
-    "@pegghy": `${__dirname}/app/`,
+    "@pegghy": path.resolve(__dirname, "app"),
   },
   vuetify: {
     defaults: {
