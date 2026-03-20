@@ -15,7 +15,6 @@ exports.handler = async function (event, context) {
   };
 };
 
-
 //exports.handler = async function (event) {
 //  console.log("body", event.body)
 //  const { name, email, launch } = JSON.parse(event.body)
