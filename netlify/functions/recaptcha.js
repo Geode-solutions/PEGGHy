@@ -9,5 +9,7 @@ exports.handler = function (event) {
   console.log("body", event.body);
   const { name, email, launch } = JSON.parse(event.body);
   console.log(name, email, launch);
-  return check_recaptcha_params(name, email, launch);
+  const result = check_recaptcha_params(name, email, launch);
+  console.log({ result });
+  return result;
 };
