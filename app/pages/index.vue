@@ -28,18 +28,6 @@ const dataStore = useDataStore();
 const dataStyleStore = useDataStyleStore();
 const hybridViewerStore = useHybridViewerStore();
 
-const { query } = useRoute();
-if (query.geode_port) {
-  console.log("Modifying geode port from query parameters to", query.geode_port);
-  geodeStore.$patch({ default_local_port: query.geode_port });
-}
-if (query.viewer_port) {
-  console.log("Modifying viewer port from query parameters to", query.viewer_port);
-  viewerStore.$patch({ default_local_port: query.viewer_port });
-}
-
-const menuX = ref(0);
-const menuY = ref(0);
 const containerWidth = ref(0);
 const containerHeight = ref(0);
 const id = ref("");
@@ -151,7 +139,7 @@ watch(
       const start = Date.now();
       await importWorkflow(dataList);
       console.log("importWorkflow duration :", (Date.now() - start) / MS_TO_SECONDS, "s");
-      hybridViewerStore.syncRemoteCamera();
+      hybridViewerStore.resetCamera();
     }
   },
   { immediate: true },
