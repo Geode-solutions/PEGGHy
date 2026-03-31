@@ -207,6 +207,9 @@ async function openMenu(event) {
   const yUI = event.clientY - rect.top;
 
   await get_viewer_id(x, yPicking);
+  if (!id.value) {
+    return;
+  }
   const item = await dataStore.item(id.value);
 
   menuStore.openMenu(
