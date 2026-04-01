@@ -8,6 +8,7 @@ import Launcher from "@ogw_front/components/Launcher";
 import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu";
 import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree";
 
+import ViewerUI from "@ogw_front/components/Viewer/Ui";
 import { useDataStore } from "@ogw_front/stores/data";
 import { useDataStyleStore } from "@ogw_front/stores/data_style";
 import { useGeodeStore } from "@ogw_front/stores/geode";
@@ -30,8 +31,8 @@ const hybridViewerStore = useHybridViewerStore();
 
 const containerWidth = ref(0);
 const containerHeight = ref(0);
-const id = ref("");
 const cardContainer = useTemplateRef("cardContainer");
+const viewerUI = useTemplateRef("viewerUI");
 const { display_menu } = storeToRefs(menuStore);
 
 const dataList = [
@@ -167,19 +168,7 @@ onMounted(() => {
   }
 });
 
-async function get_viewer_id(x, y) {
-  const ids = Object.keys(dataStyleStore.styles);
-  await viewerStore.request(
-    viewer_schemas.opengeodeweb_viewer.viewer.picked_ids,
-    { x, y, ids },
-    {
-      response_function: (response) => {
-        const [array_ids] = response.array_ids;
-        id.value = array_ids;
-      },
-    },
-  );
-}
+
 
 async function handleTreeMenu({ event, itemId, context_type, modelId }) {
   const rect = cardContainer.value.getBoundingClientRect();
@@ -204,19 +193,26 @@ async function handleTreeMenu({ event, itemId, context_type, modelId }) {
 }
 
 async function openMenu(event) {
-  const rect = cardContainer.value.$el.getBoundingClientRect();
+  const rect = cardContainer.value.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const yPicking = containerHeight.value - (event.clientY - rect.top);
   const yUI = event.clientY - rect.top;
 
-  await get_viewer_id(x, yPicking);
-  if (!id.value) {
+  const { id: pickedId, viewer_id } = await viewerUI.value.get_viewer_id(x, yPicking);
+  if (!pickedId) {
     return;
   }
-  const item = await dataStore.item(id.value);
+  const item = await dataStore.item(pickedId);
+
+  if (item.viewer_type === "model" && viewer_id !== undefined) {
+    const component = await dataStore.getComponentByViewerId(pickedId, viewer_id);
+    if (component) {
+      item.pickedComponentId = component.geode_id;
+    }
+  }
 
   menuStore.openMenu(
-    id.value,
+    pickedId,
     x,
     yUI,
     containerWidth.value,
@@ -239,10 +235,11 @@ async function openMenu(event) {
   >
     <HybridRenderingView>
       <template #ui>
+        <ViewerUI ref="viewerUI" />
         <ViewerTreeObjectTree @show-menu="handleTreeMenu" />
         <ViewerContextMenu
           v-if="display_menu"
-          :id="menuStore.current_id || id"
+          :id="menuStore.current_id"
           :x="menuStore.menuX"
           :y="menuStore.menuY"
           :containerWidth="containerWidth"
