@@ -5,8 +5,6 @@ import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schem
 
 import HybridRenderingView from "@ogw_front/components/HybridRenderingView";
 import Launcher from "@ogw_front/components/Launcher";
-import ViewerContextMenu from "@ogw_front/components/Viewer/ContextMenu";
-import ViewerTreeObjectTree from "@ogw_front/components/Viewer/Tree/ObjectTree";
 
 import ViewerUI from "@ogw_front/components/Viewer/Ui";
 import { useDataStore } from "@ogw_front/stores/data";
@@ -146,26 +144,11 @@ watch(
   { immediate: true },
 );
 
-function resize() {
-  if (cardContainer.value) {
-    const { width, height } = useElementSize(cardContainer.value);
-    containerWidth.value = width.value;
-    containerHeight.value = height.value;
-  }
-}
-watch(
-  () => viewerStore.status,
-  (value) => {
-    if (value === Status.CONNECTED) {
-      resize();
-    }
-  },
-);
+const { width: elWidth, height: elHeight } = useElementSize(cardContainer);
 
-onMounted(() => {
-  if (viewerStore.status === Status.CONNECTED) {
-    resize();
-  }
+watch([elWidth, elHeight], ([width, height]) => {
+  containerWidth.value = width;
+  containerHeight.value = height;
 });
 
 async function handleTreeMenu({ event, itemId, context_type, modelId }) {
@@ -229,19 +212,19 @@ async function openMenu(event) {
     v-else
     ref="cardContainer"
     style="width: 100%; height: calc(100vh - 145px); border-radius: 15px"
-    @click.right="openMenu"
+    @contextmenu.prevent="openMenu"
   >
     <HybridRenderingView>
       <template #ui>
-        <ViewerUI ref="viewerUI" />
-        <ViewerTreeObjectTree @show-menu="handleTreeMenu" />
-        <ViewerContextMenu
-          v-if="display_menu"
-          :id="menuStore.current_id"
-          :x="menuStore.menuX"
-          :y="menuStore.menuY"
-          :containerWidth="containerWidth"
-          :containerHeight="containerHeight"
+        <ViewerUI
+          ref="viewerUI"
+          :display-menu="display_menu"
+          :menu-store="menuStore"
+          :container-width="containerWidth"
+          :container-height="containerHeight"
+          :data-style-store="dataStyleStore"
+          :viewer-store="viewerStore"
+          @show-menu="handleTreeMenu"
         />
       </template>
     </HybridRenderingView>
