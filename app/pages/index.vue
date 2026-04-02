@@ -177,7 +177,7 @@ async function handleTreeMenu({ event, itemId, context_type, modelId }) {
 
   const meta_data =
     context_type === "model_component"
-      ? { viewer_type: "model_component", geode_object_type: "component", modelId }
+      ? { viewer_type: "model_component", geode_object_type: "component", modelId, pickedComponentId: itemId }
       : await dataStore.item(itemId);
 
   menuStore.openMenu(
