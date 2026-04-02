@@ -168,8 +168,6 @@ onMounted(() => {
   }
 });
 
-
-
 async function handleTreeMenu({ event, itemId, context_type, modelId }) {
   const rect = cardContainer.value.getBoundingClientRect();
   const x = event.clientX - rect.left;
