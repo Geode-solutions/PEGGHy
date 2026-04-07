@@ -1,6 +1,5 @@
 // @ts-check
 import { defineConfig, devices } from "@playwright/test";
-import { fileURLToPath } from "node:url";
 import { isWindows } from "std-env";
 
 const WINDOWS_TIMEOUT = 90_000;
@@ -29,7 +28,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     nuxt: {
-      rootDir: fileURLToPath(new URL(".", import.meta.url)),
+      rootDir: import.meta.dirname,
       dev: true,
     },
 

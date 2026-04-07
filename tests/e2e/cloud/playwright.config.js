@@ -1,6 +1,5 @@
 // @ts-check
 import { defineConfig, devices } from "@playwright/test";
-import { fileURLToPath } from "node:url";
 
 const TIMEOUT = 250_000;
 
@@ -27,7 +26,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     nuxt: {
-      rootDir: fileURLToPath(new URL(".", import.meta.url)),
+      rootDir: import.meta.dirname,
       dev: true,
     },
 
