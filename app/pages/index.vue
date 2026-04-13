@@ -156,7 +156,7 @@ async function handleTreeMenu({ event, itemId, context_type, modelId, modelCompo
   const x = event.clientX - rect.left;
   const yUI = event.clientY - rect.top;
 
-  let meta_data;
+  let meta_data = undefined;
   if (context_type === "model_component") {
     meta_data = {
       viewer_type: "model_component",
@@ -169,7 +169,7 @@ async function handleTreeMenu({ event, itemId, context_type, modelId, modelCompo
       viewer_type: "model_component_type",
       geode_object_type: "type",
       modelId,
-      modelComponentType: modelComponentType,
+      modelComponentType,
     };
   } else {
     meta_data = await dataStore.item(itemId);
