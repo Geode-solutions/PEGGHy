@@ -176,7 +176,7 @@ async function handleTreeMenu({ event, itemId, context_type, modelId, modelCompo
   }
 
   menuStore.openMenu(
-    modelId, // ← also changed from itemId to modelId (matching Vease)
+    modelId,
     x,
     yUI,
     containerWidth.value,
