@@ -1,6 +1,6 @@
 <script setup>
 import { Status } from "@ogw_front/utils/status";
-import { importWorkflow } from "@ogw_front/utils/file_import_workflow";
+import { importWorkflow } from "@ogw_front/utils/import_workflow";
 import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json";
 
 import HybridRenderingView from "@ogw_front/components/HybridRenderingView";
