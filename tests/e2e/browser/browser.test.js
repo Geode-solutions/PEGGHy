@@ -10,6 +10,7 @@ import { runBrowser } from "@geode/opengeodeweb-front/app/utils/local/scripts.js
 const WINDOWS_TIMEOUT = 30;
 const LINUX_TIMEOUT = 25;
 const MILLISECONDS = 1000;
+const TIMEOUT = (isWindows ? WINDOWS_TIMEOUT : LINUX_TIMEOUT) * MILLISECONDS;
 
 let nuxtPort = 0;
 
@@ -27,7 +28,7 @@ test.afterEach(async () => {
 });
 
 test("Microservices running", async ({ page }) => {
-  await page.waitForTimeout((isWindows ? WINDOWS_TIMEOUT : LINUX_TIMEOUT) * MILLISECONDS);
+  await page.waitForTimeout(TIMEOUT);
   await expect(page).toHaveScreenshot({
     path: `microservices-running-${process.platform}.png`,
   });
