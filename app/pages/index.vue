@@ -9,7 +9,7 @@ import Launcher from "@ogw_front/components/Launcher";
 import ViewerUI from "@ogw_front/components/Viewer/Ui";
 import { useDataStore } from "@ogw_front/stores/data";
 import { useDataStyleStore } from "@ogw_front/stores/data_style";
-import { useGeodeStore } from "@ogw_front/stores/geode";
+import { useBackStore } from "@ogw_front/stores/back";
 import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer";
 import { useInfraStore } from "@ogw_front/stores/infra";
 import { useMenuStore } from "@ogw_front/stores/menu";
@@ -21,7 +21,7 @@ const MS_TO_SECONDS = 1000;
 
 const infraStore = useInfraStore();
 const viewerStore = useViewerStore();
-const geodeStore = useGeodeStore();
+const backStore = useBackStore();
 const menuStore = useMenuStore();
 const dataStore = useDataStore();
 const dataStyleStore = useDataStyleStore();
@@ -128,7 +128,7 @@ const dataList = [
 ];
 
 watch(
-  () => [viewerStore.status, geodeStore.status],
+  () => [viewerStore.status, backStore.status],
   async ([viewerStatus, geodeStatus]) => {
     console.log("Status viewer changed:", viewerStatus);
     console.log("Status geode changed:", geodeStatus);
