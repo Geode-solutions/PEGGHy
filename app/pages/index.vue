@@ -1,12 +1,11 @@
 <script setup>
 import { Status } from "@ogw_front/utils/status";
 import { importWorkflow } from "@ogw_front/utils/import_workflow";
-import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json";
 
 import HybridRenderingView from "@ogw_front/components/HybridRenderingView";
 import Launcher from "@ogw_front/components/Launcher";
-
 import ViewerUI from "@ogw_front/components/Viewer/Ui";
+
 import { useBackStore } from "@ogw_front/stores/back";
 import { useDataStore } from "@ogw_front/stores/data";
 import { useDataStyleStore } from "@ogw_front/stores/data_style";
@@ -137,7 +136,11 @@ watch(
     if (viewerStatus === Status.CONNECTED && backStatus === Status.CONNECTED) {
       const start = Date.now();
       await importWorkflow(dataList);
-      console.log("importWorkflow duration :", (Date.now() - start) / MS_TO_SECONDS, "s");
+      console.log(
+        "importWorkflow duration :",
+        (Date.now() - start) / MS_TO_SECONDS,
+        "s",
+      );
       hybridViewerStore.resetCamera();
     }
   },
@@ -151,7 +154,13 @@ watch([elWidth, elHeight], ([width, height]) => {
   containerHeight.value = height;
 });
 
-async function handleTreeMenu({ event, itemId, context_type, modelId, modelComponentType }) {
+async function handleTreeMenu({
+  event,
+  itemId,
+  context_type,
+  modelId,
+  modelComponentType,
+}) {
   const rect = cardContainer.value.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const yUI = event.clientY - rect.top;
@@ -193,14 +202,20 @@ async function openMenu(event) {
   const yPicking = containerHeight.value - (event.clientY - rect.top);
   const yUI = event.clientY - rect.top;
 
-  const { id: pickedId, viewer_id } = await viewerUI.value.get_viewer_id(x, yPicking);
+  const { id: pickedId, viewer_id } = await viewerUI.value.get_viewer_id(
+    x,
+    yPicking,
+  );
   if (!pickedId) {
     return;
   }
   const item = await dataStore.item(pickedId);
 
   if (item.viewer_type === "model" && viewer_id !== undefined) {
-    const component = await dataStore.getComponentByViewerId(pickedId, viewer_id);
+    const component = await dataStore.getComponentByViewerId(
+      pickedId,
+      viewer_id,
+    );
     if (component) {
       item.pickedComponentId = component.geode_id;
     }
@@ -220,7 +235,11 @@ async function openMenu(event) {
 </script>
 
 <template>
-  <Launcher v-if="infraStore.status != Status.CREATED" app-name="PEGGHy" logo="/logo.png" />
+  <Launcher
+    v-if="infraStore.status != Status.CREATED"
+    app-name="PEGGHy"
+    logo="/logo.png"
+  />
   <Partners v-if="infraStore.status != Status.CREATED" />
   <v-card
     v-else
