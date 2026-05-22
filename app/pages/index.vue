@@ -1,15 +1,14 @@
 <script setup>
 import { Status } from "@ogw_front/utils/status";
 import { importWorkflow } from "@ogw_front/utils/import_workflow";
-import viewer_schemas from "@geode/opengeodeweb-viewer/opengeodeweb_viewer_schemas.json";
 
 import HybridRenderingView from "@ogw_front/components/HybridRenderingView";
 import Launcher from "@ogw_front/components/Launcher";
-
 import ViewerUI from "@ogw_front/components/Viewer/Ui";
+
+import { useBackStore } from "@ogw_front/stores/back";
 import { useDataStore } from "@ogw_front/stores/data";
 import { useDataStyleStore } from "@ogw_front/stores/data_style";
-import { useGeodeStore } from "@ogw_front/stores/geode";
 import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer";
 import { useInfraStore } from "@ogw_front/stores/infra";
 import { useMenuStore } from "@ogw_front/stores/menu";
@@ -21,7 +20,7 @@ const MS_TO_SECONDS = 1000;
 
 const infraStore = useInfraStore();
 const viewerStore = useViewerStore();
-const geodeStore = useGeodeStore();
+const backStore = useBackStore();
 const menuStore = useMenuStore();
 const dataStore = useDataStore();
 const dataStyleStore = useDataStyleStore();
@@ -128,13 +127,13 @@ const dataList = [
 ];
 
 watch(
-  () => [viewerStore.status, geodeStore.status],
-  async ([viewerStatus, geodeStatus]) => {
+  () => [viewerStore.status, backStore.status],
+  async ([viewerStatus, backStatus]) => {
     console.log("Status viewer changed:", viewerStatus);
-    console.log("Status geode changed:", geodeStatus);
+    console.log("Status back changed:", backStatus);
 
     console.log("Status", Status);
-    if (viewerStatus === Status.CONNECTED && geodeStatus === Status.CONNECTED) {
+    if (viewerStatus === Status.CONNECTED && backStatus === Status.CONNECTED) {
       const start = Date.now();
       await importWorkflow(dataList);
       console.log("importWorkflow duration :", (Date.now() - start) / MS_TO_SECONDS, "s");
