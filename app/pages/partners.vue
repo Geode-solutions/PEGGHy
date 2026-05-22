@@ -1,5 +1,6 @@
 <script setup>
 import Partners from "@pegghy/components/Partners";
+
 onUnmounted(() => {
   console.log("Partners page unmounted");
 });
