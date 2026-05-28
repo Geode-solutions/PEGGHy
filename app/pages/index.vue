@@ -15,6 +15,7 @@ import { useMenuStore } from "@ogw_front/stores/menu";
 import { useViewerStore } from "@ogw_front/stores/viewer";
 
 import Partners from "@pegghy/components/Partners";
+import pegghyLogo from "@pegghy/assets/img/pegghy.png";
 
 const MS_TO_SECONDS = 1000;
 
@@ -219,7 +220,7 @@ async function openMenu(event) {
 </script>
 
 <template>
-  <Launcher v-if="infraStore.status != Status.CREATED" app-name="PEGGHy" logo="/logo.png" />
+  <Launcher v-if="infraStore.status != Status.CREATED" app-name="PEGGHy" :logo="pegghyLogo" />
   <Partners v-if="infraStore.status != Status.CREATED" />
   <v-card
     v-else
