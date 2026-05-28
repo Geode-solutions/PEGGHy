@@ -219,7 +219,6 @@ async function openMenu(event) {
 </script>
 
 <template>
-  <Launcher v-if="infraStore.status != Status.CREATED" app-name="PEGGHy" logo="/logo.png" />
   <Partners v-if="infraStore.status != Status.CREATED" />
   <v-card
     v-else
