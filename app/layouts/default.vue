@@ -13,8 +13,8 @@ const infraStore = useInfraStore();
 <template>
   <v-app>
     <TopBar />
-    <Launcher v-if="infraStore.status != Status.CREATED" app-name="PEGGHy" logo="/logo.png" />
     <v-main class="custom-background" style="padding-bottom: 70px; min-height: calc(100vh - 70px)">
+      <Launcher v-if="infraStore.status != Status.CREATED" app-name="PEGGHy" logo="/logo.png" />
       <v-row class="fill-height pa-2 mr-1 ml-1">
         <v-col cols="12" class="pa-1">
           <FeedbackErrorBanner style="border-radius: 15px" />
