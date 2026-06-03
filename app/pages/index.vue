@@ -3,7 +3,6 @@ import { Status } from "@ogw_front/utils/status";
 import { importWorkflow } from "@ogw_front/utils/import_workflow";
 
 import HybridRenderingView from "@ogw_front/components/HybridRenderingView";
-import Launcher from "@ogw_front/components/Launcher";
 import ViewerUI from "@ogw_front/components/Viewer/Ui";
 
 import { useBackStore } from "@ogw_front/stores/back";
@@ -220,7 +219,6 @@ async function openMenu(event) {
 </script>
 
 <template>
-  <Launcher v-if="infraStore.status != Status.CREATED" app-name="PEGGHy" :logo="pegghyLogo" />
   <Partners v-if="infraStore.status != Status.CREATED" />
   <v-card
     v-else
