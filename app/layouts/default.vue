@@ -1,6 +1,7 @@
 <script setup>
 import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers";
 import FeedbackErrorBanner from "@ogw_front/components/FeedBack/ErrorBanner";
+import Launcher from "@ogw_front/components/Launcher";
 import { Status } from "@ogw_front/utils/status";
 import { useInfraStore } from "@ogw_front/stores/infra";
 
