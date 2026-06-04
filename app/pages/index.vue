@@ -3,7 +3,6 @@ import { Status } from "@ogw_front/utils/status";
 import { importWorkflow } from "@ogw_front/utils/import_workflow";
 
 import HybridRenderingView from "@ogw_front/components/HybridRenderingView";
-import Launcher from "@ogw_front/components/Launcher";
 import ViewerUI from "@ogw_front/components/Viewer/Ui";
 
 import { useBackStore } from "@ogw_front/stores/back";
@@ -15,6 +14,7 @@ import { useMenuStore } from "@ogw_front/stores/menu";
 import { useViewerStore } from "@ogw_front/stores/viewer";
 
 import Partners from "@pegghy/components/Partners";
+import pegghyLogo from "@pegghy/assets/img/pegghy.png";
 
 const MS_TO_SECONDS = 1000;
 
@@ -219,7 +219,6 @@ async function openMenu(event) {
 </script>
 
 <template>
-  <Launcher v-if="infraStore.status != Status.CREATED" app-name="PEGGHy" logo="/logo.png" />
   <Partners v-if="infraStore.status != Status.CREATED" />
   <v-card
     v-else
