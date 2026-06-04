@@ -34,14 +34,7 @@ function navigate() {
 </script>
 
 <template>
-  <v-app-bar
-    :key="$route.path"
-    flat
-    color="transparent"
-    height="75"
-    :elevation="0"
-    style="z-index: 100"
-  >
+  <v-app-bar :key="$route.path" flat color="transparent" height="75" :elevation="0" z-index="3">
     <v-row class="mr-8 ml-8 align-center">
       <v-img :src="logoPegghy" max-height="60" max-width="60" contain draggable="false" />
       <v-spacer />
