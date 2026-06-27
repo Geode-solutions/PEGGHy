@@ -1,16 +1,14 @@
 // Third party imports
 import { expect, test } from "@playwright/test";
-import { isWindows } from "std-env";
 import kill from "kill-port";
 import { runBrowser } from "@geode/opengeodeweb-front/app/utils/local/scripts.js";
 
 // Local imports
 
 // Constants
-const WINDOWS_TIMEOUT = 30;
-const LINUX_TIMEOUT = 25;
+const TIMEOUT_SECONDS = 30;
 const MILLISECONDS = 1000;
-const TIMEOUT = (isWindows ? WINDOWS_TIMEOUT : LINUX_TIMEOUT) * MILLISECONDS;
+const TIMEOUT = TIMEOUT_SECONDS * MILLISECONDS;
 
 let nuxtPort = 0;
 
