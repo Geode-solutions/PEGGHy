@@ -20,6 +20,7 @@ const infraStore = useInfraStore();
         app-name="PEGGHy"
         email="noreply@geode-solutions.com"
         logo="/logo.png"
+        isUserAuthenticated="true"
       />
       <v-row class="fill-height pa-2 mr-1 ml-1">
         <v-col cols="12" class="pa-1">
