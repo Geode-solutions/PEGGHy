@@ -18,6 +18,7 @@ const infraStore = useInfraStore();
       <Launcher
         v-if="infraStore.status != Status.CREATED"
         app-name="PEGGHy"
+        email="noreply@geode-solutions.com"
         logo="/logo.png"
         isUserAuthenticated="true"
       />
