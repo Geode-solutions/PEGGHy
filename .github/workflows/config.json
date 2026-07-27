@@ -2,5 +2,6 @@
   "node": false,
   "browser": true,
   "desktop": false,
-  "cloud": true
+  "cloud": true,
+  "docker": true
 }
