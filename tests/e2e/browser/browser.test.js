@@ -1,7 +1,7 @@
 // Third party imports
 import { expect, test } from "@playwright/test";
 import kill from "kill-port";
-import { runBrowser } from "@geode/opengeodeweb-front/app/utils/local/scripts.js";
+import { runBrowser } from "@geode/opengeodeweb-front/server/utils/scripts.js";
 
 // Local imports
 
