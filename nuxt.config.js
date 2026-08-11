@@ -29,9 +29,6 @@ export default defineNuxtConfig({
         draggable: false,
       },
     },
-    moduleOptions: {
-      prefixComposables: true,
-    },
     vuetifyOptions: {
       labComponents: true,
       theme: {
