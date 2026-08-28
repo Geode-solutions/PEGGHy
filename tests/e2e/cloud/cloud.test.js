@@ -20,7 +20,9 @@ test.beforeAll(async ({ browser }) => {
   if (await button.isVisible().catch(() => false)) {
     await button.click();
   }
-  await page.getByTestId("hybridViewer").waitFor({ state: "visible", timeout: HYBRID_VIEWER_TIMEOUT });
+  await page
+    .getByTestId("hybridViewer")
+    .waitFor({ state: "visible", timeout: HYBRID_VIEWER_TIMEOUT });
 }, TIMEOUT);
 
 test.afterAll(async () => {
@@ -36,7 +38,10 @@ test("Microservices running", async () => {
 test("Overlapping menu", async () => {
   const card = page.getByTestId("hybridViewer");
   await expect(card).toBeVisible({ timeout: VISIBLE_TIMEOUT });
-  await page.getByTestId("hybridViewer").getByText("Objects").waitFor({ state: "visible", timeout: HYBRID_VIEWER_TIMEOUT });
+  await page
+    .getByTestId("hybridViewer")
+    .getByText("Objects")
+    .waitFor({ state: "visible", timeout: HYBRID_VIEWER_TIMEOUT });
   await page.waitForTimeout(RENDERING_WAIT_TIME);
 
   const box = await card.boundingBox();
@@ -46,9 +51,7 @@ test("Overlapping menu", async () => {
   await page.mouse.move(clickX, clickY);
   await page.mouse.click(clickX, clickY, { button: "right" });
   await expect(
-    page
-      .getByTestId("overlappingObjectsPicker")
-      .or(page.getByTestId("viewerContextMenu")),
+    page.getByTestId("overlappingObjectsPicker").or(page.getByTestId("viewerContextMenu")),
   ).toBeVisible({
     timeout: PICKER_TIMEOUT,
   });
