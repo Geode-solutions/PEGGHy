@@ -151,7 +151,11 @@ watch([elWidth, elHeight], ([width, height]) => {
 });
 
 async function handleTreeMenu({ event, itemId, context_type, modelId, modelComponentType }) {
-  const rect = cardContainer.value.getBoundingClientRect();
+  const cardEl = cardContainer.value?.$el || cardContainer.value;
+  if (!cardEl) {
+    return;
+  }
+  const rect = cardEl.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const yUI = event.clientY - rect.top;
 
@@ -187,7 +191,11 @@ async function handleTreeMenu({ event, itemId, context_type, modelId, modelCompo
 }
 
 async function openMenu(event) {
-  const rect = cardContainer.value.getBoundingClientRect();
+  const cardEl = cardContainer.value?.$el || cardContainer.value;
+  if (!cardEl) {
+    return;
+  }
+  const rect = cardEl.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const yPicking = containerHeight.value - (event.clientY - rect.top);
   const yUI = event.clientY - rect.top;
@@ -223,6 +231,7 @@ async function openMenu(event) {
   <v-card
     v-else
     ref="cardContainer"
+    data-testid="viewerCard"
     style="width: 100%; height: calc(100vh - 145px); border-radius: 15px"
     @contextmenu.prevent="openMenu"
   >

@@ -31,3 +31,22 @@ test("Microservices running", async ({ page }) => {
     path: `microservices-running-${process.platform}.png`,
   });
 });
+
+test("Overlapping menu", async ({ page }) => {
+  await page.waitForTimeout(TIMEOUT);
+  const card = page.locator(".v-card").first();
+  const box = await card.boundingBox();
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2, {
+    button: "right",
+  });
+  await expect(
+    page
+      .getByTestId("overlappingObjectsPicker")
+      .or(page.getByTestId("viewerContextMenu")),
+  ).toBeVisible({
+    timeout: 10_000,
+  });
+  await expect(page).toHaveScreenshot({
+    path: `overlapping-menu-${process.platform}.png`,
+  });
+});
