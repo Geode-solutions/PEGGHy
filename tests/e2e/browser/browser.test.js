@@ -40,9 +40,7 @@ test("Overlapping menu", async ({ page }) => {
     button: "right",
   });
   await expect(
-    page
-      .getByTestId("overlappingObjectsPicker")
-      .or(page.getByTestId("viewerContextMenu")),
+    page.getByTestId("overlappingObjectsPicker").or(page.getByTestId("viewerContextMenu")),
   ).toBeVisible({
     timeout: 10_000,
   });
