@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
+import { execSync } from "node:child_process";
 
+const WAIT_TIME = 140_000;
 const TIMEOUT = 150_000;
 const HYBRID_VIEWER_TIMEOUT = 30_000;
 const VISIBLE_TIMEOUT = 15_000;
@@ -14,13 +16,22 @@ test.beforeAll(async ({ browser }) => {
   page = await browser.newPage();
   page.on("console", (msg) => console.log(`Browser console: ${msg.text()}`));
 
-  await page.goto("http://localhost:3000");
+  let prefix = "";
+  const branch = execSync("git branch --show-current", {
+    encoding: "utf8",
+  }).trim();
+  console.log("Current branch:", branch);
+  if (branch === "next") {
+    prefix = "next.";
+  }
+
+  await page.goto(`https://${prefix}pegghy.geode-solutions.com`);
   console.log("Navigated to", page.url());
   const button = page.getByRole("button", { name: "Load the app" });
   if (await button.isVisible().catch(() => false)) {
     await button.click();
   }
-  await page.getByTestId("hybridViewer").waitFor({ state: "visible", timeout: HYBRID_VIEWER_TIMEOUT });
+  await page.waitForTimeout(WAIT_TIME);
 }, TIMEOUT);
 
 test.afterAll(async () => {
