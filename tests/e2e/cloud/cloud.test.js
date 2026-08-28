@@ -47,10 +47,7 @@ test("Microservices running", async () => {
 test("Overlapping menu", async () => {
   const card = page.getByTestId("hybridViewer");
   await expect(card).toBeVisible({ timeout: VISIBLE_TIMEOUT });
-  await page
-    .getByTestId("hybridViewer")
-    .getByText("Objects")
-    .waitFor({ state: "visible", timeout: HYBRID_VIEWER_TIMEOUT });
+  await page.getByText("Objects", { exact: true }).waitFor({ state: "visible", timeout: HYBRID_VIEWER_TIMEOUT });
   await page.waitForTimeout(RENDERING_WAIT_TIME);
 
   const box = await card.boundingBox();
