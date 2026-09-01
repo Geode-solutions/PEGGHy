@@ -8,7 +8,12 @@ const VISIBLE_TIMEOUT = 15_000;
 const PICKER_TIMEOUT = 20_000;
 const RENDERING_WAIT_TIME = 5000;
 
-test.beforeEach(async ({ page }) => {
+test.describe.configure({ mode: "serial" });
+
+let page = undefined;
+
+test.beforeAll(async ({ browser }) => {
+  page = await browser.newPage();
   page.on("console", (msg) => console.log(`Browser console: ${msg.text()}`));
 
   let prefix = "";
@@ -22,20 +27,22 @@ test.beforeEach(async ({ page }) => {
 
   await page.goto(`https://${prefix}pegghy.geode-solutions.com`);
   console.log("Navigated to", page.url());
-  const button = await page.getByRole("button", { name: "Load the app" });
-  console.log({ button });
+  const button = page.getByRole("button", { name: "Load the app" });
   await button.click();
   await page.waitForTimeout(WAIT_TIME);
 }, TIMEOUT);
 
-test("Microservices running", async ({ page }) => {
+test.afterAll(async () => {
+  await page?.close();
+});
+
+test("Microservices running", async () => {
   await expect(page).toHaveScreenshot({
     path: `microservices-running-${process.platform}.png`,
   });
-  page.close();
 });
 
-test("Overlapping menu", async ({ page }) => {
+test("Overlapping menu", async () => {
   const card = page.getByTestId("hybridViewer");
   await expect(card).toBeVisible({ timeout: VISIBLE_TIMEOUT });
   await page
@@ -57,5 +64,4 @@ test("Overlapping menu", async ({ page }) => {
   await expect(page).toHaveScreenshot({
     path: `overlapping-menu-${process.platform}.png`,
   });
-  page.close();
 });
