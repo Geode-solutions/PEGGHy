@@ -28,9 +28,7 @@ test.beforeAll(async ({ browser }) => {
   await page.goto(`https://${prefix}pegghy.geode-solutions.com`);
   console.log("Navigated to", page.url());
   const button = page.getByRole("button", { name: "Load the app" });
-  if (await button.isVisible().catch(() => false)) {
-    await button.click();
-  }
+  await button.click();
   await page.waitForTimeout(WAIT_TIME);
 }, TIMEOUT);
 
