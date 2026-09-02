@@ -150,12 +150,15 @@ watch([elWidth, elHeight], ([width, height]) => {
   containerHeight.value = height;
 });
 
-async function handleTreeMenu({ event, itemId, context_type, modelId, modelComponentType }) {
-  const cardEl = cardContainer.value?.$el || cardContainer.value;
-  if (!cardEl) {
-    return;
-  }
-  const rect = cardEl.getBoundingClientRect();
+async function handleTreeMenu({
+  event,
+  itemId,
+  context_type,
+  modelId,
+  modelComponentType,
+  targetComponentIds,
+}) {
+  const rect = cardContainer.value.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const yUI = event.clientY - rect.top;
 
@@ -173,6 +176,7 @@ async function handleTreeMenu({ event, itemId, context_type, modelId, modelCompo
       geode_object_type: "type",
       modelId,
       modelComponentType,
+      targetComponentIds,
     };
   } else {
     meta_data = await dataStore.item(itemId);
@@ -189,6 +193,7 @@ async function handleTreeMenu({ event, itemId, context_type, modelId, modelCompo
     meta_data,
   );
 }
+
 
 async function openMenu(event) {
   const cardEl = cardContainer.value?.$el || cardContainer.value;
