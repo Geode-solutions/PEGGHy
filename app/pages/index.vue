@@ -227,7 +227,7 @@ async function openMenu(event) {
 
 <template>
   <Partners v-if="infraStore.status != Status.CREATED" />
-  <v-card
+  <div
     v-else
     ref="cardContainer"
     data-testid="viewerCard"
@@ -245,5 +245,5 @@ async function openMenu(event) {
         />
       </template>
     </HybridRenderingView>
-  </v-card>
+  </div>
 </template>
