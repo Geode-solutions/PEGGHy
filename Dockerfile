@@ -54,6 +54,7 @@ RUN chmod +x /usr/local/bin/cleanup.bash
 RUN apt-get install -y libgomp1
 COPY --from=back /usr/local/bin/pegghy-back /usr/local/bin/pegghy-back
 RUN chmod +x /usr/local/bin/pegghy-back
+COPY --from=back /PEGGHy-Data /PEGGHy-Data
 COPY <<'EOT' /etc/supervisor/conf.d/pegghy-back.conf
 [program:pegghy-back]
 command=/usr/local/bin/pegghy-back --project_folder_path /project --timeout 2 --upload_folder_path PEGGHy-Data
