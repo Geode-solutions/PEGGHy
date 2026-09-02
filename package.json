@@ -12,6 +12,8 @@
     "build:microservices": "concurrently \"npm run build:back\" \"npm run build:viewer\"",
     "build": "nuxi build",
     "build:browser": "cross-env MODE=BROWSER npm run build",
+    "build:cloud": "cross-env MODE=CLOUD npm run build",
+    "build:cloud_server": "cross-env MODE=CLOUD_SERVER npm run build",
     "preview:browser": "node .output/server/index.mjs",
     "test:browser": "node node_scripts/browser.js preview:browser",
     "generate": "nuxt generate",
