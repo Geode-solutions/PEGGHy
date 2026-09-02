@@ -32,7 +32,6 @@ function nitroIgnoreConfig() {
   throw new Error(`Unknown mode provided: ${mode}`);
 }
 
-
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
