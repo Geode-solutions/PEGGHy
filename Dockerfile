@@ -56,7 +56,7 @@ COPY --from=back /usr/local/bin/pegghy-back /usr/local/bin/pegghy-back
 RUN chmod +x /usr/local/bin/pegghy-back
 COPY <<'EOT' /etc/supervisor/conf.d/pegghy-back.conf
 [program:pegghy-back]
-command=/usr/local/bin/pegghy-back --project_folder_path /project --timeout 2
+command=/usr/local/bin/pegghy-back --project_folder_path /project --timeout 2 --upload_folder_path PEGGHy-Data
 autostart=true
 autorestart=true
 stdout_logfile=/dev/stdout
