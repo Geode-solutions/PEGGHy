@@ -7,6 +7,32 @@ import package_json from "./package.json";
 // Constants
 const __dirname = import.meta.dirname;
 
+const serverDirectories = ["local, microservice, serverless, cloud"];
+
+function getIgnoredDirectories(directoriesToKeep) {
+  return serverDirectories
+    .filter((directory) => !directoriesToKeep.includes(directory))
+    .map((directory) => `api/${directory}/**`);
+}
+
+function nitroIgnoreConfig() {
+  const mode = process.env.MODE;
+  if (!mode) {
+    throw new Error("No mode provided");
+  }
+  if (mode === "DESKTOP" || mode === "BROWSER") {
+    return getIgnoredDirectories(["local", "microservice"]);
+  }
+  if (mode === "CLOUD") {
+    return getIgnoredDirectories(["serverless"]);
+  }
+  if (mode === "CLOUD_SERVER") {
+    return getIgnoredDirectories(["cloud", "microservice"]);
+  }
+  throw new Error(`Unknown mode provided: ${mode}`);
+}
+
+
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
@@ -81,6 +107,10 @@ export default defineNuxtConfig({
   ],
   imports: {
     scan: false,
+  },
+
+  nitro: {
+    ignore: nitroIgnoreConfig(),
   },
 
   css: ["/assets/css/main.css"],
