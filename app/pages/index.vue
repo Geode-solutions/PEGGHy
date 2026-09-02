@@ -193,13 +193,8 @@ async function handleTreeMenu({
     meta_data,
   );
 }
-
 async function openMenu(event) {
-  const cardEl = cardContainer.value?.$el || cardContainer.value;
-  if (!cardEl) {
-    return;
-  }
-  const rect = cardEl.getBoundingClientRect();
+  const rect = cardContainer.value.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const yPicking = containerHeight.value - (event.clientY - rect.top);
   const yUI = event.clientY - rect.top;
