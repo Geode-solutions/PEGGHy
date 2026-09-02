@@ -3,10 +3,8 @@ import { execSync } from "node:child_process";
 
 const WAIT_TIME = 140_000;
 const TIMEOUT = 150_000;
-const HYBRID_VIEWER_TIMEOUT = 30_000;
 const VISIBLE_TIMEOUT = 15_000;
 const PICKER_TIMEOUT = 20_000;
-const RENDERING_WAIT_TIME = 5000;
 
 test.describe.configure({ mode: "serial" });
 
@@ -43,24 +41,23 @@ test("Microservices running", async () => {
 });
 
 test("Overlapping menu", async () => {
-  const card = page.getByTestId("hybridViewer");
-  await expect(card).toBeVisible({ timeout: VISIBLE_TIMEOUT });
-  await page
-    .getByText("Objects", { exact: true })
-    .waitFor({ state: "visible", timeout: HYBRID_VIEWER_TIMEOUT });
-  await page.waitForTimeout(RENDERING_WAIT_TIME);
+  const hybridViewer = page.getByTestId("hybridViewer");
+  await expect(hybridViewer).toBeVisible({ timeout: VISIBLE_TIMEOUT });
+  const mainObjectTree = page.getByTestId("mainObjectTree");
+  await expect(mainObjectTree).toBeVisible({ timeout: VISIBLE_TIMEOUT });
 
-  const box = await card.boundingBox();
-  const clickX = box.x + box.width / 2;
-  const clickY = box.y + box.height / 2;
+  const boundingBox = await hybridViewer.boundingBox();
+  const clickX = boundingBox.x + boundingBox.width / 2;
+  const clickY = boundingBox.y + boundingBox.height / 2;
 
-  await page.mouse.move(clickX, clickY);
   await page.mouse.click(clickX, clickY, { button: "right" });
-  await expect(
-    page.getByTestId("overlappingObjectsPicker").or(page.getByTestId("viewerContextMenu")),
-  ).toBeVisible({
+  const overlappingObjectsPicker = page.getByTestId("overlappingObjectsPicker");
+  const viewerContextMenu = page.getByTestId("viewerContextMenu");
+  await expect(overlappingObjectsPicker.or(viewerContextMenu)).toBeVisible({
     timeout: PICKER_TIMEOUT,
   });
+  const afterActionWait = 2000
+  await page.waitForTimeout(afterActionWait);
   await expect(page).toHaveScreenshot({
     path: `overlapping-menu-${process.platform}.png`,
   });
