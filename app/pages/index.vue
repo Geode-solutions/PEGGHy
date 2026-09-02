@@ -194,7 +194,6 @@ async function handleTreeMenu({
   );
 }
 
-
 async function openMenu(event) {
   const cardEl = cardContainer.value?.$el || cardContainer.value;
   if (!cardEl) {
