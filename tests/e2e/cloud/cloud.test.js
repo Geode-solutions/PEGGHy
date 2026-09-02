@@ -56,7 +56,7 @@ test("Overlapping menu", async () => {
   await expect(overlappingObjectsPicker.or(viewerContextMenu)).toBeVisible({
     timeout: PICKER_TIMEOUT,
   });
-  const afterActionWait = 2000
+  const afterActionWait = 2000;
   await page.waitForTimeout(afterActionWait);
   await expect(page).toHaveScreenshot({
     path: `overlapping-menu-${process.platform}.png`,
