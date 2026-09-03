@@ -52,8 +52,7 @@ test("Overlapping menu", async () => {
 
   await page.mouse.click(clickX, clickY, { button: "right" });
   const overlappingObjectsPicker = page.getByTestId("overlappingObjectsPicker");
-  const viewerContextMenu = page.getByTestId("viewerContextMenu");
-  await expect(overlappingObjectsPicker.or(viewerContextMenu)).toBeVisible({
+  await expect(overlappingObjectsPicker).toBeVisible({
     timeout: PICKER_TIMEOUT,
   });
   const afterActionWait = 2000;
