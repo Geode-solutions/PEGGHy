@@ -7,6 +7,7 @@ import { useInfraStore } from "@ogw_front/stores/infra";
 
 import Footer from "@pegghy/components/Footer";
 import TopBar from "@pegghy/components/TopBar";
+import logoPegghy from "@pegghy/assets/img/pegghy.png";
 
 const infraStore = useInfraStore();
 </script>
@@ -19,7 +20,7 @@ const infraStore = useInfraStore();
         v-if="infraStore.status != Status.CREATED"
         app-name="PEGGHy"
         email="noreply@geode-solutions.com"
-        logo="/logo.png"
+        :logo="logoPegghy"
         isUserAuthenticated="true"
       />
       <v-row class="fill-height pa-2 mr-1 ml-1">
