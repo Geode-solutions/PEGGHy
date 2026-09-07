@@ -289,19 +289,9 @@ async function openMenu(event) {
       "
     >
       <v-img :src="pegghyLogo" max-width="80" max-height="80" class="mb-4" contain />
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        size="56"
-        width="4"
-        class="mb-4"
-      />
-      <div class="text-subtitle-1 font-weight-bold text-white mb-1">
-        Loading data ...
-      </div>
-      <div class="text-caption text-grey-lighten-1">
-        {{ loadedCount }} / {{ totalDataCount }}
-      </div>
+      <v-progress-circular indeterminate color="primary" size="56" width="4" class="mb-4" />
+      <div class="text-subtitle-1 font-weight-bold text-white mb-1">Loading data ...</div>
+      <div class="text-caption text-grey-lighten-1">{{ loadedCount }} / {{ totalDataCount }}</div>
     </div>
 
     <HybridRenderingView>
