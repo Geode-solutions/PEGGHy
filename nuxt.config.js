@@ -55,6 +55,9 @@ export default defineNuxtConfig({
       },
     },
     moduleOptions: {},
+    moduleOptions: {
+      enableRules: false,
+    },
     vuetifyOptions: {
       labComponents: true,
       theme: {

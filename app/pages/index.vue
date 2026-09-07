@@ -13,7 +13,13 @@ import { useInfraStore } from "@ogw_front/stores/infra";
 import { useMenuStore } from "@ogw_front/stores/menu";
 import { useViewerStore } from "@ogw_front/stores/viewer";
 
-import { DATA_COLORS, applyInitialCamera, hexToRgba } from "@pegghy/utils/data_settings";
+import {
+  DATA_COLORS,
+  applyInitialCamera,
+  getHasImportedData,
+  hexToRgba,
+  setHasImportedData,
+} from "@pegghy/utils/data_settings";
 import Partners from "@pegghy/components/Partners";
 import pegghyLogo from "@pegghy/assets/img/pegghy.png";
 
@@ -33,7 +39,7 @@ const cardContainer = useTemplateRef("cardContainer");
 const viewerUI = useTemplateRef("viewerUI");
 const { display_menu } = storeToRefs(menuStore);
 
-const isDataLoading = ref(true);
+const isDataLoading = ref(!getHasImportedData());
 const loadedCount = ref(0);
 const totalDataCount = ref(0);
 
@@ -131,12 +137,15 @@ const dataList = [
   },
 ];
 
-let hasImported = false;
 watch(
   () => [viewerStore.status, backStore.status],
   async ([viewerStatus, backStatus]) => {
-    if (viewerStatus === Status.CONNECTED && backStatus === Status.CONNECTED && !hasImported) {
-      hasImported = true;
+    if (
+      viewerStatus === Status.CONNECTED &&
+      backStatus === Status.CONNECTED &&
+      !getHasImportedData()
+    ) {
+      setHasImportedData(true);
       isDataLoading.value = true;
       totalDataCount.value = dataList.length;
       try {

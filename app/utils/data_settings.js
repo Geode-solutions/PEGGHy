@@ -59,4 +59,22 @@ function applyInitialCamera(hybridViewerStore) {
   hybridViewerStore.syncRemoteCamera();
 }
 
-export { DATA_COLORS, INITIAL_CAMERA, applyInitialCamera, hexToRgba };
+let hasImportedData = false;
+
+function setHasImportedData(value = true) {
+  hasImportedData = value;
+}
+
+function getHasImportedData() {
+  return hasImportedData;
+}
+
+export {
+  DATA_COLORS,
+  INITIAL_CAMERA,
+  applyInitialCamera,
+  getHasImportedData,
+  hexToRgba,
+  setHasImportedData,
+};
+
