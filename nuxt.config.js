@@ -54,7 +54,6 @@ export default defineNuxtConfig({
         draggable: false,
       },
     },
-    moduleOptions: {},
     moduleOptions: {
       enableRules: false,
     },
