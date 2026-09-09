@@ -49,9 +49,11 @@ export default defineNuxtConfig({
     "@pegghy": path.resolve(__dirname, "app"),
   },
   vuetify: {
-    enableRules: false,
     moduleOptions: {
       enableRules: false,
+      rulesConfiguration: {
+        fromLabs: false,
+      },
     },
     vuetifyOptions: {
       defaults: {
@@ -98,7 +100,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    ["vuetify-nuxt-module", { enableRules: false }],
+    "vuetify-nuxt-module",
     [
       "@pinia/nuxt",
       {
