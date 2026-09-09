@@ -275,7 +275,7 @@ async function openMenu(event) {
     data-testid="viewerCard"
     style="
       width: 100%;
-      height: calc(100vh - 180px);
+      height: calc(100vh - 150px);
       border-radius: 15px;
       overflow: hidden;
       position: relative;

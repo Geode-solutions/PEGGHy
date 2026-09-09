@@ -15,7 +15,7 @@ const infraStore = useInfraStore();
 <template>
   <v-app>
     <TopBar />
-    <v-main class="custom-background" style="padding-bottom: 70px; min-height: calc(100vh - 70px)">
+    <v-main class="custom-background">
       <Launcher
         v-if="infraStore.status != Status.CREATED"
         app-name="PEGGHy"
@@ -23,8 +23,8 @@ const infraStore = useInfraStore();
         :logo="logoPegghy"
         isUserAuthenticated="true"
       />
-      <v-row class="fill-height pa-2 mr-1 ml-1">
-        <v-col cols="12" class="pa-1">
+      <v-row class="fill-height py-0 px-2 my-0 mx-1">
+        <v-col cols="12" class="py-0 px-1">
           <FeedbackErrorBanner style="border-radius: 15px" />
           <NuxtPage z-index="1" />
         </v-col>
