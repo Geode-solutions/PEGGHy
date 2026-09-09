@@ -49,13 +49,18 @@ export default defineNuxtConfig({
     "@pegghy": path.resolve(__dirname, "app"),
   },
   vuetify: {
-    defaults: {
-      VImg: {
-        draggable: false,
+    moduleOptions: {
+      enableRules: false,
+      rulesConfiguration: {
+        fromLabs: false,
       },
     },
-    moduleOptions: {},
     vuetifyOptions: {
+      defaults: {
+        VImg: {
+          draggable: false,
+        },
+      },
       labComponents: true,
       theme: {
         defaultTheme: "lightTheme",
@@ -112,7 +117,7 @@ export default defineNuxtConfig({
     ignore: nitroIgnoreConfig(),
   },
 
-  css: ["/assets/css/main.css"],
+  css: [path.resolve(__dirname, "app/assets/css/main.css")],
 
   vite: {
     server: {
