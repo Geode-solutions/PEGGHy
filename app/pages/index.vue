@@ -316,12 +316,3 @@ async function openMenu(event) {
     </HybridRenderingView>
   </div>
 </template>
-
-<style scoped>
-:deep(.treeview-layout) {
-  top: 8px !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  height: calc(100% - 16px) !important;
-}
-</style>
