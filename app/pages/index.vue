@@ -13,6 +13,13 @@ import { useInfraStore } from "@ogw_front/stores/infra";
 import { useMenuStore } from "@ogw_front/stores/menu";
 import { useViewerStore } from "@ogw_front/stores/viewer";
 
+import {
+  DATA_COLORS,
+  applyInitialCamera,
+  getHasImportedData,
+  hexToRgba,
+  setHasImportedData,
+} from "@pegghy/utils/data_settings";
 import Partners from "@pegghy/components/Partners";
 import pegghyLogo from "@pegghy/assets/img/pegghy.png";
 
@@ -31,6 +38,10 @@ const containerHeight = ref(0);
 const cardContainer = useTemplateRef("cardContainer");
 const viewerUI = useTemplateRef("viewerUI");
 const { display_menu } = storeToRefs(menuStore);
+
+const isDataLoading = ref(!getHasImportedData());
+const loadedCount = ref(0);
+const totalDataCount = ref(0);
 
 const dataList = [
   { filename: "barrel.pl", geode_object_type: "EdgedCurve3D" },
@@ -129,15 +140,46 @@ const dataList = [
 watch(
   () => [viewerStore.status, backStore.status],
   async ([viewerStatus, backStatus]) => {
-    console.log("Status viewer changed:", viewerStatus);
-    console.log("Status back changed:", backStatus);
+    if (
+      viewerStatus === Status.CONNECTED &&
+      backStatus === Status.CONNECTED &&
+      !getHasImportedData()
+    ) {
+      setHasImportedData(true);
+      isDataLoading.value = true;
+      totalDataCount.value = dataList.length;
+      try {
+        const itemIds = await importWorkflow(dataList, (loaded, total) => {
+          loadedCount.value = loaded;
+          totalDataCount.value = total;
+        });
 
-    console.log("Status", Status);
-    if (viewerStatus === Status.CONNECTED && backStatus === Status.CONNECTED) {
-      const start = Date.now();
-      await importWorkflow(dataList);
-      console.log("importWorkflow duration :", (Date.now() - start) / MS_TO_SECONDS, "s");
-      hybridViewerStore.resetCamera();
+        const stylePromises = itemIds.map(async (id) => {
+          try {
+            const item = await dataStore.item(id);
+            if (!item) {
+              return;
+            }
+
+            const colorHex = DATA_COLORS[item.name];
+            if (colorHex) {
+              await dataStyleStore.setMeshPolygonsColor(item.id, hexToRgba(colorHex));
+            }
+
+            if (item.geode_object_type === "EdgedCurve3D") {
+              await dataStyleStore.setMeshPointsVisibility(item.id, false);
+            }
+          } catch {
+            // Ignore styling errors for individual items
+          }
+        });
+        await Promise.all(stylePromises);
+
+        applyInitialCamera(hybridViewerStore);
+        await hybridViewerStore.remoteRender();
+      } finally {
+        isDataLoading.value = false;
+      }
     }
   },
   { immediate: true },
@@ -231,9 +273,36 @@ async function openMenu(event) {
     v-else
     ref="cardContainer"
     data-testid="viewerCard"
-    style="width: 100%; height: calc(100vh - 145px); border-radius: 15px"
+    style="
+      width: 100%;
+      height: calc(100vh - 150px);
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+    "
     @contextmenu.prevent="openMenu"
   >
+    <div
+      v-if="isDataLoading"
+      data-testid="dataLoadingOverlay"
+      class="d-flex flex-column align-center justify-center fill-height w-100"
+      style="
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        background: rgba(30, 30, 30, 0.7);
+        backdrop-filter: blur(8px);
+        border-radius: 15px;
+        pointer-events: auto;
+      "
+    >
+      <v-img :src="pegghyLogo" max-width="80" max-height="80" class="mb-4" contain />
+      <v-progress-circular indeterminate color="primary" size="56" width="4" class="mb-4" />
+      <div class="text-subtitle-1 font-weight-bold text-white mb-1">Loading data ...</div>
+      <div class="text-caption text-grey-lighten-1">{{ loadedCount }} / {{ totalDataCount }}</div>
+    </div>
+
     <HybridRenderingView>
       <template #ui>
         <ViewerUI
