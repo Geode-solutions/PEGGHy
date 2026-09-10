@@ -1,5 +1,3 @@
-// oxlint-disable eslint/no-magic-numbers
-
 const DATA_COLORS = {
   Base_cut: "#D7DC96",
   Base: "#6F9FA0",
@@ -37,9 +35,17 @@ function hexToRgba(hex) {
   };
 }
 
+const FOCAL_POINT_X = -10.3;
+const FOCAL_POINT_Y = 21.4;
+const FOCAL_POINT_Z = 362.58;
+
+const CAMERA_POSITION_X = -104.92;
+const CAMERA_POSITION_Y = -45.84;
+const CAMERA_POSITION_Z = 377.24;
+
 const INITIAL_CAMERA = {
-  focal_point: [-10.3, 21.4, 362.58],
-  position: [-104.92, -45.84, 377.24],
+  focal_point: [FOCAL_POINT_X, FOCAL_POINT_Y, FOCAL_POINT_Z],
+  position: [CAMERA_POSITION_X, CAMERA_POSITION_Y, CAMERA_POSITION_Z],
   view_up: [0, 0, 1],
 };
 
