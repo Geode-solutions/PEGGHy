@@ -8,6 +8,7 @@ const TIMEOUT = 40_000;
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
+// oxlint-disable-next-line import/no-default-export -- Nuxt requires nuxt.config.ts to have a default export
 export default defineConfig<ConfigOptions>({
   expect: {
     toHaveScreenshot: { maxDiffPixelRatio: 0.02 },

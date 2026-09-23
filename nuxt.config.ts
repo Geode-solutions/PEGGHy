@@ -58,6 +58,7 @@ function nitroIgnoreConfig(): string[] {
   throw new Error(`Unknown mode provided: ${mode}`);
 }
 
+// oxlint-disable-next-line import/no-default-export -- Nuxt requires nuxt.config.ts to have a default export
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
