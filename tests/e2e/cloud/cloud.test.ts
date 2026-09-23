@@ -67,7 +67,7 @@ test("Microservices running", async () => {
   await expect(mainObjectTree).toBeVisible({ timeout: VISIBLE_TIMEOUT });
 
   await currentPage.waitForTimeout(RENDER_WAIT);
-  await expect(currentPage).toHaveScreenshot(`microservices-running-${process.platform}.png`);
+  await expect(currentPage).toHaveScreenshot(`microservices-running.png`);
 });
 
 test("Overlapping menu", async () => {
@@ -113,5 +113,5 @@ test("Overlapping menu", async () => {
     timeout: PICKER_TIMEOUT,
   });
   await currentPage.waitForTimeout(AFTER_ACTION_WAIT);
-  await expect(currentPage).toHaveScreenshot(`overlapping-menu-${process.platform}.png`);
+  await expect(currentPage).toHaveScreenshot(`overlapping-menu.png`);
 });

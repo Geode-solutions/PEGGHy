@@ -29,5 +29,5 @@ test.afterEach(async () => {
 
 test("Microservices running", async ({ page }) => {
   await page.waitForTimeout(TIMEOUT);
-  await expect(page).toHaveScreenshot(`microservices-running-${process.platform}.png`);
+  await expect(page).toHaveScreenshot(`microservices-running.png`);
 });
