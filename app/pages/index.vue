@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Status } from "@ogw_front/utils/status";
 import { importWorkflow } from "@ogw_front/utils/import_workflow";
 
@@ -199,7 +199,7 @@ async function handleTreeMenu({
   modelId,
   modelComponentType,
   targetComponentIds,
-}) {
+}): Promise<void> {
   const rect = cardContainer.value.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const yUI = event.clientY - rect.top;
@@ -224,18 +224,18 @@ async function handleTreeMenu({
     meta_data = await dataStore.item(itemId);
   }
 
-  menuStore.openMenu(
-    itemId,
+  menuStore.openMenu({
+    id: itemId,
     x,
-    yUI,
-    containerWidth.value,
-    containerHeight.value,
-    rect.top,
-    rect.left,
+    y: yUI,
+    width: containerWidth.value,
+    height: containerHeight.value,
+    top: rect.top,
+    left: rect.left,
     meta_data,
-  );
+  });
 }
-async function openMenu(event) {
+async function openMenu(event: MouseEvent): Promise<void> {
   const rect = cardContainer.value.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const yPicking = containerHeight.value - (event.clientY - rect.top);
@@ -254,16 +254,16 @@ async function openMenu(event) {
     }
   }
 
-  menuStore.openMenu(
-    pickedId,
+  menuStore.openMenu({
+    id: pickedId,
     x,
-    yUI,
-    containerWidth.value,
-    containerHeight.value,
-    rect.top,
-    rect.left,
-    item,
-  );
+    y: yUI,
+    width: containerWidth.value,
+    height: containerHeight.value,
+    top: rect.top,
+    left: rect.left,
+    meta_data: item,
+  });
 }
 </script>
 

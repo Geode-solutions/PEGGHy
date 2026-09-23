@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import andra from "@/assets/img/andra.png";
 import anteagroup from "@/assets/img/anteagroup.png";
 import enerex from "@/assets/img/enerex.png";

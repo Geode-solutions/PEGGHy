@@ -1,12 +1,12 @@
-// @ts-check
 import { defineConfig, devices } from "@playwright/test";
+import type { ConfigOptions } from "@nuxt/test-utils/playwright";
 
 const TIMEOUT = 250_000;
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-export default defineConfig({
+export default defineConfig<ConfigOptions>({
   expect: {
     toHaveScreenshot: { maxDiffPixelRatio: 0.02 },
   },

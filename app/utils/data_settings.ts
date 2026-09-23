@@ -1,3 +1,5 @@
+import type { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer";
+
 const DATA_COLORS = {
   Base_cut: "#D7DC96",
   Base: "#6F9FA0",
@@ -25,7 +27,14 @@ const RED_OFFSET = 0;
 const GREEN_OFFSET = 2;
 const BLUE_OFFSET = 4;
 
-function hexToRgba(hex) {
+interface Rgba {
+  red: number;
+  green: number;
+  blue: number;
+  alpha: number;
+}
+
+function hexToRgba(hex: string): Rgba {
   const sanitized = hex.replace("#", "");
   return {
     red: Number.parseInt(sanitized.slice(RED_OFFSET, RED_OFFSET + HEX_CHUNK_LEN), HEX_BASE),
@@ -47,9 +56,9 @@ const INITIAL_CAMERA = {
   focal_point: [FOCAL_POINT_X, FOCAL_POINT_Y, FOCAL_POINT_Z],
   position: [CAMERA_POSITION_X, CAMERA_POSITION_Y, CAMERA_POSITION_Z],
   view_up: [0, 0, 1],
-};
+} as const;
 
-function applyInitialCamera(hybridViewerStore) {
+function applyInitialCamera(hybridViewerStore: ReturnType<typeof useHybridViewerStore>): void {
   const { genericRenderWindow } = hybridViewerStore;
   if (!genericRenderWindow?.value) {
     return;
@@ -67,11 +76,11 @@ function applyInitialCamera(hybridViewerStore) {
 
 let hasImportedData = false;
 
-function setHasImportedData(value = true) {
+function setHasImportedData(value = true): void {
   hasImportedData = value;
 }
 
-function getHasImportedData() {
+function getHasImportedData(): boolean {
   return hasImportedData;
 }
 

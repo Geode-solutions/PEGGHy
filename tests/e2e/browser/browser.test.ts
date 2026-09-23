@@ -14,7 +14,9 @@ let nuxtPort = 0;
 
 test.beforeEach(async ({ page }) => {
   nuxtPort = await runBrowser("preview:browser");
-  page.on("console", (msg) => console.log(`Browser console: ${msg.text()}`));
+  page.on("console", (msg) => {
+    console.log(`Browser console: ${msg.text()}`);
+  });
   await page.goto(`http://localhost:${nuxtPort}`);
   console.log("Navigated to", page.url());
 });
@@ -27,7 +29,5 @@ test.afterEach(async () => {
 
 test("Microservices running", async ({ page }) => {
   await page.waitForTimeout(TIMEOUT);
-  await expect(page).toHaveScreenshot({
-    path: `microservices-running-${process.platform}.png`,
-  });
+  await expect(page).toHaveScreenshot(`microservices-running-${process.platform}.png`);
 });
