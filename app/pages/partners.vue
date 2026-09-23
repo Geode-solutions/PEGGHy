@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Partners from "@pegghy/components/Partners";
 
 onUnmounted(() => {

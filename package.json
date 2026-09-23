@@ -19,8 +19,8 @@
     "generate": "nuxt generate",
     "unpacked": "npm run build && electron-builder --dir",
     "package": "npm run build && electron-builder build --publish=never",
-    "test:e2e:browser": "npx playwright test --config ./tests/e2e/browser/playwright.config.js",
-    "test:e2e:cloud": "npx playwright test --config ./tests/e2e/cloud/playwright.config.js"
+    "test:e2e:browser": "npx playwright test --config ./tests/e2e/browser/playwright.config.ts",
+    "test:e2e:cloud": "npx playwright test --config ./tests/e2e/cloud/playwright.config.ts"
   },
   "dependencies": {
     "@geode/opengeodeweb-back": "0.0.0",
@@ -30,6 +30,7 @@
     "kill-port": "2.0.1"
   },
   "devDependencies": {
+    "@nuxt/test-utils": "4.1.0",
     "@playwright/test": "1.54.1",
     "concurrently": "9.2.1",
     "cross-env": "10.0.0",

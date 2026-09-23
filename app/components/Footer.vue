@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import logoGeode from "@/assets/img/geode-no-text.png";
 </script>
 

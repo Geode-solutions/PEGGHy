@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import logoPegghy from "@/assets/img/pegghy.png";
 
 const $route = useRoute();
@@ -7,7 +7,7 @@ const isPartnersPage = ref(false);
 
 const icon = computed(() => ($route.path === "/partners" ? "mdi-home" : "mdi-information-variant"));
 
-function updateRouteState() {
+function updateRouteState(): void {
   isPartnersPage.value = $route.path === "/partners";
   console.log("Route:", $route.path, "isPartnersPage:", isPartnersPage.value);
 }
@@ -26,7 +26,7 @@ watch(
   { immediate: true },
 );
 
-function navigate() {
+function navigate(): void {
   const path = isPartnersPage.value ? "/" : "/partners";
   console.log("Navigating to:", path);
   $router.push(path);

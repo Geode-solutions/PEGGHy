@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers";
 import FeedbackErrorBanner from "@ogw_front/components/FeedBack/ErrorBanner";
 import Launcher from "@ogw_front/components/Launcher";
