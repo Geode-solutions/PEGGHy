@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { consola } from "consola";
 import logoPegghy from "@/assets/img/pegghy.png";
 
 const $route = useRoute();
@@ -9,7 +10,7 @@ const icon = computed(() => ($route.path === "/partners" ? "mdi-home" : "mdi-inf
 
 function updateRouteState(): void {
   isPartnersPage.value = $route.path === "/partners";
-  console.log("Route:", $route.path, "isPartnersPage:", isPartnersPage.value);
+  consola.debug("Route:", $route.path, "isPartnersPage:", isPartnersPage.value);
 }
 
 onMounted(() => {
@@ -20,7 +21,7 @@ onMounted(() => {
 watch(
   () => $route.path,
   (newPath) => {
-    console.log("Route changed to:", newPath);
+    consola.debug("Route changed to:", newPath);
     updateRouteState();
   },
   { immediate: true },
@@ -28,7 +29,7 @@ watch(
 
 function navigate(): void {
   const path = isPartnersPage.value ? "/" : "/partners";
-  console.log("Navigating to:", path);
+  consola.debug("Navigating to:", path);
   $router.push(path);
 }
 </script>

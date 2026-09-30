@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import Partners from "@pegghy/components/Partners";
+import { consola } from "consola";
 
 onUnmounted(() => {
-  console.log("Partners page unmounted");
+  consola.debug("Partners page unmounted");
 });
 </script>
 

@@ -5,6 +5,12 @@ import { isWindows } from "std-env";
 const WINDOWS_TIMEOUT = 90_000;
 const TIMEOUT = 40_000;
 
+const isCI = process.env.CI !== undefined && process.env.CI !== "";
+if (isCI) {
+  // Reaches the spawned Nitro server through process.env: the app logs plain text instead of styled consola output
+  process.env.NUXT_PUBLIC_PLAIN_LOGS = "true";
+}
+
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
