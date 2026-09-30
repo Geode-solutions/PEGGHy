@@ -1,5 +1,6 @@
 // Third party imports
 import { expect, test } from "@playwright/test";
+import { consola } from "consola";
 import kill from "kill-port";
 import { runBrowser } from "@geode/opengeodeweb-front/server/utils/scripts.js";
 
@@ -15,16 +16,16 @@ let nuxtPort = 0;
 test.beforeEach(async ({ page }) => {
   nuxtPort = await runBrowser("preview:browser");
   page.on("console", (msg) => {
-    console.log(`Browser console: ${msg.text()}`);
+    consola.info(`Browser console: ${msg.text()}`);
   });
   await page.goto(`http://localhost:${nuxtPort}`);
-  console.log("Navigated to", page.url());
+  consola.info("Navigated to", page.url());
 });
 
 test.afterEach(async () => {
-  console.log("Killing Nuxt process", { nuxtPort });
+  consola.info("Killing Nuxt process", { nuxtPort });
   await kill(nuxtPort);
-  console.log("Killed Nuxt process", { nuxtPort });
+  consola.info("Killed Nuxt process", { nuxtPort });
 });
 
 test("Microservices running", async ({ page }) => {

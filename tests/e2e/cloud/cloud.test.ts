@@ -1,4 +1,5 @@
 import { type Page, expect, test } from "@playwright/test";
+import { consola } from "consola";
 import { execSync } from "node:child_process";
 
 function assertDefined<Value>(
@@ -35,20 +36,20 @@ test.beforeAll(async ({ browser }) => {
   test.setTimeout(TIMEOUT);
   page = await browser.newPage();
   page.on("console", (msg) => {
-    console.log(`Browser console: ${msg.text()}`);
+    consola.info(`Browser console: ${msg.text()}`);
   });
 
   let prefix = "";
   const branch = execSync("git branch --show-current", {
     encoding: "utf8",
   }).trim();
-  console.log("Current branch:", branch);
+  consola.info("Current branch:", branch);
   if (branch === "next") {
     prefix = "next.";
   }
 
   await page.goto(`https://${prefix}pegghy.geode-solutions.com`);
-  console.log("Navigated to", page.url());
+  consola.info("Navigated to", page.url());
   const button = page.getByRole("button", { name: "Load the app" });
   await button.click();
 });
