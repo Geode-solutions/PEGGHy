@@ -20,7 +20,8 @@
     "unpacked": "npm run build && electron-builder --dir",
     "package": "npm run build && electron-builder build --publish=never",
     "test:e2e:browser": "npx playwright test --config ./tests/e2e/browser/playwright.config.ts",
-    "test:e2e:cloud": "npx playwright test --config ./tests/e2e/cloud/playwright.config.ts"
+    "test:e2e:cloud": "npx playwright test --config ./tests/e2e/cloud/playwright.config.ts",
+    "prepare:types": "cross-env MODE=BROWSER npx nuxi prepare"
   },
   "dependencies": {
     "@geode/opengeodeweb-back": "0.0.0",
