@@ -11,6 +11,7 @@ import { useDataStyleStore } from "@ogw_front/stores/data_style";
 import { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer";
 import { useInfraStore } from "@ogw_front/stores/infra";
 import { useMenuStore } from "@ogw_front/stores/menu";
+import { useViewerContextMenu } from "@ogw_front/composables/viewer_context_menu";
 import { useViewerStore } from "@ogw_front/stores/viewer";
 
 import {
@@ -33,11 +34,13 @@ const dataStore = useDataStore();
 const dataStyleStore = useDataStyleStore();
 const hybridViewerStore = useHybridViewerStore();
 
-const containerWidth = ref(0);
-const containerHeight = ref(0);
 const cardContainer = useTemplateRef("cardContainer");
 const viewerUI = useTemplateRef("viewerUI");
 const { display_menu } = storeToRefs(menuStore);
+const { containerWidth, containerHeight, openTreeMenu, openViewerMenu } = useViewerContextMenu(
+  cardContainer,
+  viewerUI,
+);
 
 const isDataLoading = ref(!getHasImportedData());
 const loadedCount = ref(0);
@@ -184,87 +187,6 @@ watch(
   },
   { immediate: true },
 );
-
-const { width: elWidth, height: elHeight } = useElementSize(cardContainer);
-
-watch([elWidth, elHeight], ([width, height]) => {
-  containerWidth.value = width;
-  containerHeight.value = height;
-});
-
-async function handleTreeMenu({
-  event,
-  itemId,
-  context_type,
-  modelId,
-  modelComponentType,
-  targetComponentIds,
-}): Promise<void> {
-  const rect = cardContainer.value.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const yUI = event.clientY - rect.top;
-
-  let meta_data = undefined;
-  if (context_type === "model_component") {
-    meta_data = {
-      viewer_type: "model_component",
-      geode_object_type: "component",
-      modelId,
-      pickedComponentId: itemId,
-    };
-  } else if (context_type === "model_component_type") {
-    meta_data = {
-      viewer_type: "model_component_type",
-      geode_object_type: "type",
-      modelId,
-      modelComponentType,
-      targetComponentIds,
-    };
-  } else {
-    meta_data = await dataStore.item(itemId);
-  }
-
-  menuStore.openMenu({
-    id: itemId,
-    x,
-    y: yUI,
-    width: containerWidth.value,
-    height: containerHeight.value,
-    top: rect.top,
-    left: rect.left,
-    meta_data,
-  });
-}
-async function openMenu(event: MouseEvent): Promise<void> {
-  const rect = cardContainer.value.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const yPicking = containerHeight.value - (event.clientY - rect.top);
-  const yUI = event.clientY - rect.top;
-
-  const { id: pickedId, viewer_id } = await viewerUI.value.get_viewer_id(x, yPicking);
-  if (!pickedId) {
-    return;
-  }
-  const item = await dataStore.item(pickedId);
-
-  if (item.viewer_type === "model" && viewer_id !== undefined) {
-    const component = await dataStore.getComponentByViewerId(pickedId, viewer_id);
-    if (component) {
-      item.pickedComponentId = component.geode_id;
-    }
-  }
-
-  menuStore.openMenu({
-    id: pickedId,
-    x,
-    y: yUI,
-    width: containerWidth.value,
-    height: containerHeight.value,
-    top: rect.top,
-    left: rect.left,
-    meta_data: item,
-  });
-}
 </script>
 
 <template>
@@ -281,7 +203,7 @@ async function openMenu(event: MouseEvent): Promise<void> {
       position: relative;
       isolation: isolate;
     "
-    @contextmenu.prevent="openMenu"
+    @contextmenu.prevent="openViewerMenu"
   >
     <div
       v-if="isDataLoading"
@@ -310,7 +232,7 @@ async function openMenu(event: MouseEvent): Promise<void> {
           :display-menu="display_menu"
           :container-width="containerWidth"
           :container-height="containerHeight"
-          @show-menu="handleTreeMenu"
+          @show-menu="openTreeMenu"
         />
       </template>
     </HybridRenderingView>
