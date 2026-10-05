@@ -37,6 +37,8 @@
     "@types/ws": "8.18.1",
     "concurrently": "9.2.1",
     "cross-env": "10.0.0",
+    "oxlint": "latest",
+    "oxlint-tsgolint": "latest",
     "playwright": "1.54.1"
   }
 }
