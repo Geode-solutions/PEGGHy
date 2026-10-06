@@ -25,11 +25,11 @@ function requiredEnv(name: string): string {
 
 export default defineTypedEventHandler(schemas.api.serverless.cloud_token, async () => {
   const app =
-    getApps().length === 0 ? initializeApp({ apiKey: requiredEnv("FIREBASE_API_KEY") }) : getApp();
+    getApps().length === 0 ? initializeApp({ apiKey: requiredEnv("GOOGLE_CLOUD_KEY") }) : getApp();
   const { user } = await signInWithEmailAndPassword(
     getAuth(app),
-    requiredEnv("FIREBASE_EMAIL"),
-    requiredEnv("FIREBASE_PASSWORD"),
+    requiredEnv("EMAIL"),
+    requiredEnv("PASSWORD"),
   );
   return { token: await user.getIdToken() };
 });
