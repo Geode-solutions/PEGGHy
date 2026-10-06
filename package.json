@@ -2,6 +2,16 @@
   "name": "pegghy",
   "private": true,
   "type": "module",
+  "exports": {
+    "./pegghy_schemas.json": {
+      "import": "./pegghy_schemas.json",
+      "require": "./pegghy_schemas.json"
+    },
+    "./pegghy_typed_schemas.js": {
+      "types": "./pegghy_typed_schemas.d.ts",
+      "default": "./pegghy_typed_schemas.js"
+    }
+  },
   "scripts": {
     "clean_cache": "npx nuxi cleanup",
     "dev": "npm run dev:browser",
@@ -17,6 +27,7 @@
     "preview:browser": "node .output/server/index.mjs",
     "test:browser": "node node_scripts/browser.js preview:browser",
     "generate": "nuxt generate",
+    "json": "npx opengeodeweb-microservice-generate --startDir server/api --key route --separator / --prefix api --requireResponse",
     "unpacked": "npm run build && electron-builder --dir",
     "package": "npm run build && electron-builder build --publish=never",
     "test:e2e:browser": "npx playwright test --config ./tests/e2e/browser/playwright.config.ts",
@@ -28,6 +39,7 @@
     "@geode/opengeodeweb-front": "0.0.0",
     "@geode/opengeodeweb-microservice": "0.0.0",
     "@geode/opengeodeweb-viewer": "0.0.0",
+    "firebase": "12.19.0",
     "kill-port": "2.0.1"
   },
   "devDependencies": {

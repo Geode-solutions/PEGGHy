@@ -1,0 +1,25 @@
+{
+  "api": {
+    "serverless": {
+      "cloud_token": {
+        "$id": "api/serverless/cloud_token",
+        "route": "/cloud_token",
+        "methods": ["GET"],
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false,
+        "response": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string"
+            }
+          },
+          "required": ["token"],
+          "additionalProperties": false
+        }
+      }
+    }
+  }
+}
