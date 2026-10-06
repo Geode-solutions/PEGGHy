@@ -25,7 +25,7 @@ function requiredEnv(name: string): string {
 
 export default defineTypedEventHandler(schemas.api.serverless.cloud_token, async () => {
   const app =
-    getApps().length === 0 ? initializeApp({ apiKey: requiredEnv("GOOGLE_CLOUD_KEY") }) : getApp();
+    getApps().length === 0 ? initializeApp({ apiKey: requiredEnv("IDENTITY_API_KEY") }) : getApp();
   const { user } = await signInWithEmailAndPassword(
     getAuth(app),
     requiredEnv("EMAIL"),
