@@ -35,11 +35,11 @@
     "prepare:types": "cross-env MODE=BROWSER npx nuxi prepare"
   },
   "dependencies": {
+    "@geode/cloud-api": "0.0.0",
     "@geode/opengeodeweb-back": "0.0.0",
     "@geode/opengeodeweb-front": "0.0.0",
     "@geode/opengeodeweb-microservice": "0.0.0",
     "@geode/opengeodeweb-viewer": "0.0.0",
-    "firebase": "12.19.0",
     "kill-port": "2.0.1"
   },
   "devDependencies": {
