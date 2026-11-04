@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import andra from "@/assets/img/andra.png";
-import anteagroup from "@/assets/img/anteagroup.png";
-import enerex from "@/assets/img/enerex.png";
-import fondationgeol from "@/assets/img/fondation-geol.png";
-import geode from "@/assets/img/geode.png";
-import geolnancy from "@/assets/img/geolnancy.png";
-import grandest from "@/assets/img/grandest.png";
-import humens from "@/assets/img/humens.png";
-import idlorraine from "@/assets/img/idlorraine.png";
-import imerys from "@/assets/img/imerys.png";
-import loritz from "@/assets/img/loritz.png";
-import otelo from "@/assets/img/otelo.png";
-import sercel from "@/assets/img/sercel.png";
-import slb from "@/assets/img/slb.png";
-import soletanche from "@/assets/img/soletanche.png";
-import totalenergies from "@/assets/img/totalenergies.png";
-import udl from "@/assets/img/udl.png";
+import { images } from "@/assets/images";
+
+const {
+  andra,
+  anteagroup,
+  enerex,
+  "fondation-geol": fondationgeol,
+  geode,
+  geolnancy,
+  grandest,
+  humens,
+  idlorraine,
+  imerys,
+  loritz,
+  otelo,
+  sercel,
+  slb,
+  soletanche,
+  totalenergies,
+  udl,
+} = images;
 
 const designers = [{ logo: otelo }, { logo: udl }];
 const cofounders = [{ logo: grandest }, { logo: geolnancy }, { logo: idlorraine }];
