@@ -14,6 +14,7 @@ import otelo from "@/assets/img/otelo.png";
 import sercel from "@/assets/img/sercel.png";
 import slb from "@/assets/img/slb.png";
 import soletanche from "@/assets/img/soletanche.png";
+// oxlint-disable-next-line import/max-dependencies -- each partner logo is a separate asset import.
 import totalenergies from "@/assets/img/totalenergies.png";
 import udl from "@/assets/img/udl.png";
 
