@@ -1,3 +1,4 @@
+import type { RGBAColor } from "@ogw_front/utils/default_styles/constants";
 import type { useHybridViewerStore } from "@ogw_front/stores/hybrid_viewer";
 
 const DATA_COLORS = {
@@ -27,14 +28,7 @@ const RED_OFFSET = 0;
 const GREEN_OFFSET = 2;
 const BLUE_OFFSET = 4;
 
-interface Rgba {
-  red: number;
-  green: number;
-  blue: number;
-  alpha: number;
-}
-
-function hexToRgba(hex: string): Rgba {
+function hexToRgba(hex: string): RGBAColor {
   const sanitized = hex.replace("#", "");
   return {
     red: Number.parseInt(sanitized.slice(RED_OFFSET, RED_OFFSET + HEX_CHUNK_LEN), HEX_BASE),
