@@ -157,9 +157,9 @@ watch(
           totalDataCount.value = total;
         });
 
-        const stylePromises = itemIds.map(async (id) => {
+        const stylePromises = itemIds.map(async (dataId) => {
           try {
-            const item = await dataStore.item(id);
+            const item = await dataStore.item(dataId);
             if (!item) {
               return;
             }
