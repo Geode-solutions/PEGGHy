@@ -166,11 +166,11 @@ watch(
 
             const colorHex = DATA_COLORS[item.name];
             if (colorHex) {
-              await dataStyleStore.setMeshPolygonsColor(item.id, hexToRgba(colorHex));
+              await dataStyleStore.setMeshPolygonsColor(item.data_id, hexToRgba(colorHex));
             }
 
             if (item.geode_object_type === "EdgedCurve3D") {
-              await dataStyleStore.setMeshPointsVisibility(item.id, false);
+              await dataStyleStore.setMeshPointsVisibility(item.data_id, false);
             }
           } catch {
             // Ignore styling errors for individual items
