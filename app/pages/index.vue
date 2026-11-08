@@ -157,20 +157,20 @@ watch(
           totalDataCount.value = total;
         });
 
-        const stylePromises = itemIds.map(async (id) => {
+        const stylePromises = itemIds.map(async (dataId) => {
           try {
-            const item = await dataStore.item(id);
+            const item = await dataStore.item(dataId);
             if (!item) {
               return;
             }
 
             const colorHex = DATA_COLORS[item.name];
             if (colorHex) {
-              await dataStyleStore.setMeshPolygonsColor(item.id, hexToRgba(colorHex));
+              await dataStyleStore.setMeshPolygonsColor(item.data_id, hexToRgba(colorHex));
             }
 
             if (item.geode_object_type === "EdgedCurve3D") {
-              await dataStyleStore.setMeshPointsVisibility(item.id, false);
+              await dataStyleStore.setMeshPointsVisibility(item.data_id, false);
             }
           } catch {
             // Ignore styling errors for individual items
