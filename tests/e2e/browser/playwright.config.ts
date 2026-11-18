@@ -62,6 +62,9 @@ export default defineConfig<ConfigOptions>({
     {
       name: "opengeodeweb-front",
       testMatch: "opengeodeweb_front.test.ts",
+      // Run after browser.test.ts, alone: its screenshot needs the demo data import done before the wait ends, the
+      // Parallel apps of the suites slow it down
+      dependencies: ["chromium"],
       retries: isCI ? CI_RETRIES : 0,
       expect: {
         toHaveScreenshot: {
