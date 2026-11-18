@@ -1,46 +1,34 @@
 import { defineConfig, devices } from "@playwright/test";
-import type { ConfigOptions } from "@nuxt/test-utils/playwright";
 
+// Launching the cloud instance and loading the demo data, then the test
 const TIMEOUT = 250_000;
+const MAX_DIFF_PIXEL_RATIO = 0.02;
 
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
-// oxlint-disable-next-line import/no-default-export -- Nuxt requires nuxt.config.ts to have a default export
-export default defineConfig<ConfigOptions>({
-  expect: {
-    toHaveScreenshot: { maxDiffPixelRatio: 0.02 },
-  },
+const isCI = process.env.CI !== undefined && process.env.CI !== "";
+
+// The deployed PEGGHy (cloud.test.ts): one app for every test, launched once
+// oxlint-disable-next-line import/no-default-export -- Playwright requires its config to have a default export
+export default defineConfig({
   testDir: "./",
   timeout: TIMEOUT,
-  /* Run tests in files in parallel */
-  fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: Boolean(process.env.CI),
-  /* Retry on CI only */
+  forbidOnly: isCI,
   retries: 0,
-  /* Opt out of parallel tests on CI. */
   workers: 1,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: "html",
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    nuxt: {
-      rootDir: import.meta.dirname,
-      dev: true,
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixelRatio: MAX_DIFF_PIXEL_RATIO,
+      // Screenshots/cloud.test.ts/<test name>.png, named by the app test of OpenGeodeWeb-Front
+      pathTemplate: "./screenshots/{arg}{ext}",
     },
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
   },
-
   projects: [
     {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        viewport: { width: 1200, height: 800 },
+        screenshot: "only-on-failure",
+        trace: "retain-on-failure",
       },
     },
   ],
