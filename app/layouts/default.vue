@@ -2,6 +2,7 @@
 import FeedBackSnackers from "@ogw_front/components/FeedBack/Snackers";
 import FeedbackErrorBanner from "@ogw_front/components/FeedBack/ErrorBanner";
 import Launcher from "@ogw_front/components/Launcher";
+import MicroservicesBusyIndicator from "@ogw_front/components/MicroservicesBusyIndicator";
 import { Status } from "@ogw_front/utils/status";
 import { appMode } from "@ogw_shared/app_mode";
 import { useInfraStore } from "@ogw_front/stores/infra";
@@ -48,13 +49,6 @@ onMounted(async () => {
       <FeedBackSnackers />
     </v-main>
     <Footer />
-    <v-progress-linear
-      v-if="infraStore.microservices_busy"
-      data-testid="microservicesBusyIndicator"
-      indeterminate
-      color="white"
-      class="position-fixed top-0"
-      style="z-index: 4"
-    />
+    <MicroservicesBusyIndicator />
   </v-app>
 </template>
