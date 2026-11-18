@@ -27,7 +27,9 @@ if (isCI) {
 // - cloud: the deployed app with its demo data, launched once for every test
 // oxlint-disable-next-line import/no-default-export -- Playwright requires its config to have a default export
 export default defineConfig({
+  testMatch: "**/*.test.ts",
   forbidOnly: isCI,
+  retries: isCI ? CI_RETRIES : 0,
   workers: isCI ? CI_WORKERS : undefined,
   reporter: "html",
   expect: {
@@ -47,15 +49,12 @@ export default defineConfig({
     {
       name: "browser",
       testDir: "./browser",
-      testMatch: "opengeodeweb_front.test.ts",
       timeout: BROWSER_TIMEOUT,
       fullyParallel: true,
-      retries: isCI ? CI_RETRIES : 0,
     },
     {
       name: "cloud",
       testDir: "./cloud",
-      testMatch: "cloud.test.ts",
       timeout: CLOUD_TIMEOUT,
     },
   ],
