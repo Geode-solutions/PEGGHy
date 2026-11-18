@@ -48,5 +48,13 @@ onMounted(async () => {
       <FeedBackSnackers />
     </v-main>
     <Footer />
+    <v-progress-linear
+      v-if="infraStore.microservices_busy"
+      data-testid="microservicesBusyIndicator"
+      indeterminate
+      color="white"
+      class="position-fixed top-0"
+      style="z-index: 4"
+    />
   </v-app>
 </template>
