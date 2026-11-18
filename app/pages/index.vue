@@ -42,9 +42,7 @@ const { containerWidth, containerHeight, openTreeMenu, openViewerMenu } = useVie
   viewerUI,
 );
 
-// The e2e tests import their own data instead of the demo one (see plugins/e2e.client.ts)
-const isE2e = useRoute().query.e2e !== undefined;
-const isDataLoading = ref(!isE2e && !getHasImportedData());
+const isDataLoading = ref(!getHasImportedData());
 const loadedCount = ref(0);
 const totalDataCount = ref(0);
 
@@ -148,7 +146,6 @@ watch(
     if (
       viewerStatus === Status.CONNECTED &&
       backStatus === Status.CONNECTED &&
-      !isE2e &&
       !getHasImportedData()
     ) {
       setHasImportedData(true);

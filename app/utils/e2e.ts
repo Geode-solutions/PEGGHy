@@ -1,7 +1,9 @@
-// Test-only hook of the e2e tests (tests/e2e/browser): with ?e2e in the URL, the home page skips the demo data and,
-// Once the microservices are connected, globalThis.pegghyE2e imports the files of the tests (see plugins/e2e.client.ts)
+// Test-only hook of the e2e tests (tests/e2e/browser): with ?e2e in the URL in browser mode, the demo data is skipped
+// And, once the microservices are connected, globalThis.pegghyE2e imports the files of the tests (see
+// Plugins/e2e.client.ts). Ignored in cloud and desktop modes
 
 import type { GeodeObjectType } from "@ogw_front/types/identifiers";
+import { appMode } from "@ogw_shared/app_mode";
 import back_schemas from "@geode/opengeodeweb-back/opengeodeweb_back_typed_schemas.js";
 import { importWorkflow } from "@ogw_front/utils/import_workflow";
 import { resolveAllowedObjectsPerFile } from "@ogw_shared/utils/response_handlers/load.js";
@@ -23,7 +25,10 @@ declare global {
 }
 
 function isE2e(): boolean {
-  return new URLSearchParams(globalThis.location.search).has("e2e");
+  return (
+    useRuntimeConfig().public.MODE === appMode.BROWSER &&
+    new URLSearchParams(globalThis.location.search).has("e2e")
+  );
 }
 
 function toFile({ name, base64 }: E2eFile): File {
