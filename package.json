@@ -2,6 +2,10 @@
   "name": "pegghy",
   "private": true,
   "type": "module",
+  "imports": {
+    "#ogw_e2e/*": "@geode/opengeodeweb-front/tests/browser/helpers/*",
+    "#ogw_e2e_suites/*": "@geode/opengeodeweb-front/tests/browser/suites/*"
+  },
   "exports": {
     "./pegghy_schemas.json": {
       "import": "./pegghy_schemas.json",
