@@ -22,7 +22,11 @@ const test = appTest.extend({
   launchApp: [
     async ({ playwright, browserName, headless, channel, launchOptions }, use): Promise<void> => {
       await use(async () => {
-        const browser = await playwright[browserName].launch({ ...launchOptions, headless, channel });
+        const browser = await playwright[browserName].launch({
+          ...launchOptions,
+          headless,
+          channel,
+        });
         const context = await browser.newContext({
           viewport: { width: PAGE_WIDTH, height: PAGE_HEIGHT },
           locale: LOCALE,
