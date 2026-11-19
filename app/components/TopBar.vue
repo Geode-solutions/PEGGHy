@@ -6,7 +6,7 @@ const $route = useRoute();
 const $router = useRouter();
 const isPartnersPage = ref(false);
 
-const icon = computed(() => ($route.path === "/partners" ? "mdi-home" : "mdi-information-variant"));
+const icon = computed(() => ($route.path === "/partners" ? "ph-house" : "ph-info"));
 
 function updateRouteState(): void {
   isPartnersPage.value = $route.path === "/partners";

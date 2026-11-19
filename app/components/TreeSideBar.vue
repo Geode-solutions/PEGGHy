@@ -55,8 +55,8 @@ const tree = [
       :open.sync="open"
     >
       <template #prepend="{ item, open }">
-        <v-icon v-if="item.children">{{ open ? "mdi-folder-open" : "mdi-folder" }}</v-icon>
-        <v-icon v-else>mdi-checkbox-blank-outline</v-icon>
+        <v-icon v-if="item.children">{{ open ? "ph-folder-open" : "ph-folder" }}</v-icon>
+        <v-icon v-else>ph-square</v-icon>
       </template>
     </v-treeview>
   </v-navigation-drawer>
