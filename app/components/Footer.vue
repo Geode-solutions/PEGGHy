@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import logoGeode from "@/assets/img/geode-no-text.png";
+import logoGeode from "@/assets/img/geode.png";
 </script>
 
 <template>
   <v-footer app fixed flat height="75" color="transparent" :elevation="0" z-index="3">
     <v-row class="pa-1 align-center justify-end">
-      <span class="text-h6 mr-4 text-white">Powered by Geode-solutions</span>
-      <v-img
-        class="mr-8"
-        :src="logoGeode"
-        max-height="50"
-        max-width="50"
-        contain
-        draggable="false"
-      />
+      <div class="powered-by d-flex align-center mr-8">
+        <span class="text-h6 text-white">Powered by</span>
+        <img :src="logoGeode" alt="Geode Solutions" height="40" draggable="false" />
+      </div>
     </v-row>
   </v-footer>
 </template>
+
+<style scoped>
+.powered-by {
+  gap: 8px;
+}
+</style>

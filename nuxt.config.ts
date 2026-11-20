@@ -151,7 +151,7 @@ export default defineNuxtConfig({
       fs: {
         allow: [
           path.resolve(__dirname, "../../node_modules/@fontsource"),
-          path.resolve(__dirname, "../../node_modules/@mdi/font"),
+          path.resolve(__dirname, "../../node_modules/@phosphor-icons/web"),
         ],
       },
     },
