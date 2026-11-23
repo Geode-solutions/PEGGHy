@@ -2,6 +2,10 @@
   "name": "pegghy",
   "private": true,
   "type": "module",
+  "imports": {
+    "#ogw_e2e/*": "@geode/opengeodeweb-front/tests/browser/helpers/*",
+    "#ogw_e2e_suites/*": "@geode/opengeodeweb-front/tests/browser/suites/*"
+  },
   "exports": {
     "./pegghy_schemas.json": {
       "import": "./pegghy_schemas.json",
@@ -30,8 +34,8 @@
     "json": "npx opengeodeweb-microservice-generate --startDir server/api --key route --separator / --prefix api --requireResponse",
     "unpacked": "npm run build && electron-builder --dir",
     "package": "npm run build && electron-builder build --publish=never",
-    "test:e2e:browser": "npx playwright test --config ./tests/e2e/browser/playwright.config.ts",
-    "test:e2e:cloud": "npx playwright test --config ./tests/e2e/cloud/playwright.config.ts",
+    "test:e2e:browser": "npx playwright test --config ./tests/e2e/playwright.config.ts --project browser",
+    "test:e2e:cloud": "npx playwright test --config ./tests/e2e/playwright.config.ts --project cloud",
     "prepare:types": "cross-env MODE=BROWSER npx nuxi prepare"
   },
   "dependencies": {
