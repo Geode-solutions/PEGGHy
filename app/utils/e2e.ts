@@ -2,7 +2,7 @@
 // And, once the microservices are connected, globalThis.pegghyE2e imports the files of the tests (see
 // Plugins/e2e.client.ts). Ignored in cloud and desktop modes
 
-import type { GeodeObjectType } from "@ogw_front/types/identifiers";
+import type { GeodeObjectType } from "@geode/opengeodeweb-microservice/data_types";
 import { appMode } from "@ogw_shared/app_mode";
 import back_schemas from "@geode/opengeodeweb-back/opengeodeweb_back_typed_schemas.js";
 import { importWorkflow } from "@ogw_front/utils/import_workflow";
@@ -48,7 +48,6 @@ async function geodeObjectType(filename: string): Promise<GeodeObjectType> {
   if (selectedGeodeObject === undefined) {
     throw new Error(`No geode object type could be chosen for ${filename}`);
   }
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the back only answers with its own object types
   return selectedGeodeObject;
 }
 
